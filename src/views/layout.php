@@ -8,6 +8,7 @@
 <body>
 	<header>
 		<a href="/KTCS-Project/src">Home</a>
+		<a href="?controller=pages&action=login"> Login/Sign up</a>
 	</header>
 	<?php
 		require_once('routes.php');

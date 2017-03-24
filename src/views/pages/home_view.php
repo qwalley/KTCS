@@ -7,7 +7,6 @@
 
 	<!-- URLs beginning with '?' are relative to the root folder,
 	and can be used to set request $_GET variables-->
-	<a href="?controller=pages&action=second_page">Second Page</a>
 	<a href="?controller=pages&action=imaginary_action">An Action Error</a>
 	<a href="?controller=imaginary_controller&action=imaginary_action">A Controller Error</a>
 </div>
