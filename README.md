@@ -1,7 +1,7 @@
 # K-Town Carshare
 A website for an imaginary carshare service. Built from Php and MySQL
 
-Setup:
+## Getting Started:
 
 * Follow the [XAMPP instalation guide](https://www.apachefriends.org/index.html) to setup an Apache Web Server on your machine. 
 	* Open the XAMPP manager desktop application and in the "Manage Servers" tab, select "Apache Web Server" and click start. 
