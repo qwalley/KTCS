@@ -2,7 +2,13 @@
 <!-- authors: Will Alley -->
 
 <div id="home_view">
-	<p><?php echo 'Hello, ' . $first_name . ' ' . $last_name . '!'; ?></p>
+	<p><?php
+	if ($session) {
+		echo "Hello ".$_SESSION['user_info']['name'];
+	}
+	?></p>
+	
+
 	<p>You are on the home page.</p>
 
 	<!-- URLs beginning with '?' are relative to the root folder,

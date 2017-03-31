@@ -6,9 +6,16 @@
 
 		// define actions that belong to this controller
 		public function home () {
-			$first_name = 'Joe';
-			$last_name = 'Blow';
-
+			$session = false;
+			/*
+			if (isset($_GET['session'])) {
+				$session = $_GET['session'];
+			}
+			*/
+			session_start();
+			if (isset($_SESSION['user_info'])) {
+				$session = true;
+			}
 			// render view
 			require_once('views/pages/home_view.php');
 		}
@@ -54,7 +61,9 @@
 				}
 				// if login inputs are OK verify credentials
 				if ($email_failed == "" && $password_failed == "") {
-
+					// hash the password
+					header("Location: http://localhost/KTCS-project/src?controller=db_access&action=verify_login&email=".$email."&password=".$password);
+					die();
 				}
 			}
 
