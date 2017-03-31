@@ -14,13 +14,13 @@ A website for an imaginary carshare service. Built from Php and MySQL
 ## To Do:
 ### Will
 * create session info model
-* create query to: 
-* * authenticate logins
-* * register users
+* create queries to: 
+	* authenticate logins
+	* register users
 * create function to hash passwords
 * design and implement UI
-* * colour scheme
-* * wire frames
-* * html templates and CSS
+	* colour scheme
+	* wire frames
+	* html templates and CSS
 ### Jack
 ### Owen
