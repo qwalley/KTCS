@@ -65,6 +65,7 @@
 				}
 			}
 			else if ($failed_attempt) {
+				// TODO make this work
 				$login_failed = "Your email or password was incorrect, try again";
 			}
 

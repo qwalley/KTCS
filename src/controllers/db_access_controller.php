@@ -25,6 +25,8 @@
 				$password = $_GET['password'];
 			}
 			else {
+				// TODO 
+				// add action in error controller for uninitialized login info
 				echo "ERROR: email and password are not set in $_GET";
 			}
 			// query DB
@@ -45,11 +47,14 @@
 					"email" => $results[1]
 					);
 				session_start();
+				// add user to session
 				$_SESSION['user_info'] = $session_info;
+				// redirect to home page
 				header("Location: http://localhost/KTCS/src?controller=pages&action=home");
 				die();
 			}
 			else {
+				// redirect to login page
 				header("Location: http://localhost/KTCS/src?controller=pages&action=login&attempt=failed");
 				die();
 			}
