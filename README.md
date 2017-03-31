@@ -14,8 +14,8 @@ A website for an imaginary carshare service. Built from Php and MySQL
 ## Will's To Do:
 * create session info model
 * create queries to: 
-	* authenticate logins
 	* register users
+	* retrieve user data
 * create function to hash passwords
 * design and implement UI
 	* colour scheme
