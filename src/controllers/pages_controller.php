@@ -7,11 +7,6 @@
 		// define actions that belong to this controller
 		public function home () {
 			$session = false;
-			/*
-			if (isset($_GET['session'])) {
-				$session = $_GET['session'];
-			}
-			*/
 			session_start();
 			if (isset($_SESSION['user_info'])) {
 				$session = true;
@@ -27,8 +22,8 @@
 
 		public function login () {
 			$email = $password = $attempt = "";
-			$email_failed = $password_failed = "";
-			$login_attempt = $register_attempt = False;
+			$email_failed = $password_failed = $login_failed = "";
+			$login_attempt = $failed_attempt = $register_attempt = false;
 			
 			// check if POST was made
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -37,10 +32,13 @@
 					$attempt = $_GET['attempt'];
 
 					if ($_GET['attempt'] == "login") {
-						$login_attempt = True;
+						$login_attempt = true;
+					}
+					else if ($_GET['attempt'] == "failed") {
+						$failed_attempt = true;
 					}
 					else if ($_GET['attempt'] == "register") {
-						$register_attempt = True;
+						$register_attempt = true;
 					}
 				}
 			}
@@ -62,9 +60,12 @@
 				// if login inputs are OK verify credentials
 				if ($email_failed == "" && $password_failed == "") {
 					// hash the password
-					header("Location: http://localhost/KTCS-project/src?controller=db_access&action=verify_login&email=".$email."&password=".$password);
+					header("Location: http://localhost/KTCS/src?controller=db_access&action=verify_login&email=".$email."&password=".$password);
 					die();
 				}
+			}
+			else if ($failed_attempt) {
+				$login_failed = "Your email or password was incorrect, try again";
 			}
 
 			// render view

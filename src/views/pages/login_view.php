@@ -2,7 +2,7 @@
 <!-- authors: Will Alley -->
 
 <div id="login_view">
-	<p><?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?></p>
+	<p><?php echo $login_failed ?></p>
 	<p> Login...</p>
 	<form method="post" action="?controller=pages&action=login&attempt=login">
 		email: <input type="text" name="email">

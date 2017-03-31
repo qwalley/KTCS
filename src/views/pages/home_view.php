@@ -4,7 +4,7 @@
 <div id="home_view">
 	<p><?php
 	if ($session) {
-		echo "Hello ".$_SESSION['user_info']['name'];
+		echo "Hello Member #".$_SESSION['user_info']['ID'];
 	}
 	?></p>
 	

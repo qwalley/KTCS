@@ -12,7 +12,7 @@
 			break;
 
 			case 'db_access' : 
-				$controller = new DBAccessController();
+				$controller = new DBAccessController(Database::getInstance());
 			break;
 
 			case 'not_found' : 
