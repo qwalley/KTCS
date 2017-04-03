@@ -84,7 +84,7 @@
 			}
 
 			if($validquery){
-				header("Location: http://localhost/KTCS-Project/src?controller=admin&action=addcar&VIN=".$VIN."&make=".$make."&model=".$model."&modelYear=".$modelYear."&dailyFee=".$dailyFee."&lotNo=".$lotNo);
+				header("Location: http://localhost/KTCS/src?model=admin&action=addcar&VIN=".$VIN."&make=".$make."&model=".$model."&modelYear=".$modelYear."&dailyFee=".$dailyFee."&lotNo=".$lotNo);
 				die();
 			}
 
@@ -131,7 +131,7 @@
 				// if login inputs are OK verify credentials
 				if ($email_failed == "" && $password_failed == "") {
 					// hash the password
-					header("Location: http://localhost/KTCS-Project/src?controller=db_access&action=verify_login&email=".$email."&password=".$password);
+					header("Location: http://localhost/KTCS/src?controller=db_access&action=verify_login&email=".$email."&password=".$password);
 					die();
 				}
 			}

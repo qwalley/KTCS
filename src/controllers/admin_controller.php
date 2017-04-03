@@ -1,4 +1,4 @@
-<!-- filename: admin_access_controller.php-->
+<!-- filename: admin_controller.php-->
 <!-- authors: Owen Westland -->
 
 <?php 
@@ -96,8 +96,6 @@
 			}
 
 			$this->addCar->execute(array(':VIN' => $VIN, ':make' => $make, 'model' => $model, 'modelYear' => $modelYear, 'dailyFee' => $dailyFee, 'lotNo' => $lotNo));
-
-			//$results = $this->addCar->fetch();
 
 			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
 			$add_message = "Car successfully added to fleet.";

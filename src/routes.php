@@ -12,7 +12,7 @@
 			break;
 
 			case 'admin' :
-				$controller = new AdminController(Database::getInstance());
+				$controller = new AdminModel(Database::getInstance());
 			break;
 
 			case 'db_access' : 
