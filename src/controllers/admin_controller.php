@@ -2,10 +2,10 @@
 <!-- authors: Owen Westland -->
 
 <?php 
-    class DBAccessController {
+    class AdminController {
 	    private $db = NULL;
-		private $authenticate = NULL;
-
+		private $addCar;
+	
 		private $carReservationsSQL = 
 			'SELECT *
 	            FROM Reservations
@@ -37,7 +37,7 @@
 						GROUP BY VIN) AS lastmaintenance
 					INNER JOIN (SELECT VIN, MAX(date) AS maxdate
 						FROM rentalhistory
-						WHERE StatusOnReturn = 'damaged' OR StatusOnReturn = 'NR'
+						WHERE StatusOnReturn = \'damaged\' OR StatusOnReturn = \'NR\'
 						GROUP BY VIN) AS lastrental ON lastmaintenance.VIN = lastrental.VIN
 					WHERE lastrental.maxdate > lastmaintenance.maxdate) AS damagedcars ON Car.VIN = damagedcars.VIN';
 		
@@ -76,7 +76,33 @@
 
 		public function __construct($pdo) {
 			$this->db = $pdo;
-			$this->authenticate = $this->db->prepare($this->authSQL);
+			$this->addCar = $this->db->prepare($this->addCarSQL);
+		}
+
+		public function addcar () {
+			$VIN = $make = $model = $modelYear = $dailyFee = $lotNo = "";
+
+			if (isset($_GET['VIN']) & isset($_GET['make']) & isset($_GET['model']) & isset($_GET['modelYear']) & isset($_GET['dailyFee']) & isset($_GET['lotNo'])) {
+				$VIN = $_GET['VIN'];
+				$make = $_GET['make'];
+				$model = $_GET['model'];
+				$modelYear = $_GET['modelYear'];
+				$dailyFee = $_GET['dailyFee'];
+				$lotNo = $_GET['lotNo'];
+			}
+			else{
+				echo "ERROR: All fields must be filled to register a new car.";
+				die();
+			}
+
+			$this->addCar->execute(array(':VIN' => $VIN, ':make' => $make, 'model' => $model, 'modelYear' => $modelYear, 'dailyFee' => $dailyFee, 'lotNo' => $lotNo));
+
+			//$results = $this->addCar->fetch();
+
+			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
+			$add_message = "Car successfully added to fleet.";
+
+			require_once('views/pages/admin_view.php');
 		}
 	}
 ?>

@@ -9,6 +9,7 @@
 	<header>
 		<a href="/KTCS/src">Home</a>
 		<a href="?controller=pages&action=login"> Login/Sign up</a>
+		<a href="?controller=pages&action=admin">Administrator Page</a>
 	</header>
 	<?php
 		require_once('routes.php');
