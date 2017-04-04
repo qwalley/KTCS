@@ -40,7 +40,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">K-Town Car Share</a>
+                <a class="navbar-brand" href="/KTCS/src">K-Town Car Share</a>
             </div>
             <!-- /.navbar-header -->
             <a href="?controller=pages&action=admin">Administrator Page</a>
