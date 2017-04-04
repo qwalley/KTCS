@@ -21,74 +21,29 @@
 		}
 
 		public function admin () {
-			$error_message = "";
-			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
-			$add_message = "";
-
 			require_once('views/pages/admin_view.php');
 		}
 
 		public function addcar () {
-			$error_message = "";
-			$VIN = $make = $model = $modelYear = $dailyFee = $lotNo = "";
 			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
 			$add_message = "";
-			$validquery = true;
+			
+			require_once('views/pages/admin_pages/add_car.php');
+		}
 
-			if($_SERVER["REQUEST_METHOD"] == "POST"){
-				if(empty($_POST["VIN"])){
-					$VIN_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-			  		$VIN = test_input($_POST["VIN"]);
-				}
-				if(empty($_POST["make"])){
-					$make_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-			  		$make = test_input($_POST["make"]);
-				}
-				if(empty($_POST["model"])){
-					$model_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-			  		$model = test_input($_POST["model"]);
-				}
-				if(empty($_POST["modelYear"])){
-					$modelYear_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-			  		$modelYear = test_input($_POST["modelYear"]);
-				}
-				if(empty($_POST["dailyFee"])){
-					$dailyFee_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-			  		$dailyFee = test_input($_POST["dailyFee"]);
-				}
-				if(empty($_POST["lotNo"])){
-					$lotNo_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-			  		$lotNo = test_input($_POST["lotNo"]);
-				}
-			}
-			else{
-				$validquery = false;
-			}
+		public function commentresponse () {
+			$commentNo_failed = $response_failed = "";
+			$response_message = "";
+			
+			require_once('views/pages/admin_pages/comment_response.php');
+		}
 
-			if($validquery){
-				header("Location: http://localhost/KTCS/src?controller=admin&action=addcar&VIN=".$VIN."&make=".$make."&model=".$model."&modelYear=".$modelYear."&dailyFee=".$dailyFee."&lotNo=".$lotNo);
-				die();
-			}
-
-			require_once('views/pages/admin_view.php');
+		public function carreservations () {
+			$VIN_failed = "";
+			$result_message = "";
+			$reservations = NULL;
+			
+			require_once('views/pages/admin_pages/car_reservations.php');
 		}
 
 		public function login () {

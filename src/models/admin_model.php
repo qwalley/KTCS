@@ -5,7 +5,7 @@
     class AdminModel {
 		const carReservationsSQL = 
 			'SELECT *
-	            FROM Reservations
+	            FROM Reservation
 	            WHERE VIN = :VIN';
 
         const lotCarsSQL =
@@ -77,9 +77,31 @@
 
 			$query->execute(array(':VIN' => $VIN, ':make' => $make, 'model' => $model, 'modelYear' => $modelYear, 'dailyFee' => $dailyFee, 'lotNo' => $lotNo));
 
-			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
+            return true;
+		}
+
+        public function commentresponse ($commentNo, $response){
+            $db = Database::getInstance();
+            $query = $db->prepare(AdminModel::commentResponseSQL);
+
+            $query->execute(array(':commentNo' => $commentNo, ':response' => $response));
 
             return true;
+        }
+
+		public function carreservations ($VIN){
+			require_once('reservation.php');
+			$db = Database::getInstance();
+			$query = $db->prepare(AdminModel::carReservationsSQL);
+			$reservations = NULL;
+
+			$query->execute(array(':VIN' => $VIN));
+
+			foreach($query->fetchAll() as $res) {
+        		$reservations[] = new Reservation($res['VIN'], $res['memberID'], $res['date'], $res['accessCode'], $res['reservationLength']);
+      		}
+
+			return $reservations;
 		}
 	}
 ?>
