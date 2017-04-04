@@ -80,6 +80,11 @@
 				FROM member
 				WHERE memberID = :memberID';
 
+		const carSQL =
+			'SELECT *
+				FROM Car
+				WHERE VIN = :VIN';
+
 		public function addcar ($VIN, $make, $model, $modelYear, $dailyFee, $lotNo) {
             $db = Database::getInstance();
             $query = $db->prepare(AdminModel::addCarSQL);
@@ -212,9 +217,12 @@
 			$db = Database::getInstance();
 			$historyquery = $db->prepare(AdminModel::userInvoiceSQL);
 			$userquery = $db->prepare(AdminModel::userSQL);
+			$carquery = $db->prepare(AdminModel::carSQL);
 			$rh = NULL;
 			$total = NULL;
 			$user = NULL;
+			$cars = NULL;
+			$count = 0;
 			$invoice = "";
 
 			$headers = 'From: noreply@KTCS.com' . "\r\n" .
@@ -226,6 +234,8 @@
 
 			foreach($historyquery->fetchAll() as $h) {
         		$rh[] = new RentalHistory($h['VIN'], $h['memberID'], $h['date'], $h['startingOdometer'], $h['endingOdometer'], $h['StatusOnReturn'], $h['reservationLength'], $h['dailyFee']);
+				$carquery->execute(array(":VIN" => $h['VIN']));
+				$cars[] = $carquery->fetch();
       		}
 			
 			$user = $userquery->fetch();
@@ -238,18 +248,27 @@
 			}
 
 			$invoice = "Hello ".$user['name'].",\n\tOutlined below is a receipt for your use of the KTCS service:\n\n";
-			$invoice = "".$invoice."VIN\t\tDaily Fee\t\tReservation Period\t\tCharge\n";
+			$invoice = "".$invoice."\tCar\t\t\t\t\t\t\t\t\tDaily Fee\tReservation Period\t\tCharge\n";
 
 			foreach($rh as $h){
-				$invoice = "".$invoice.$h->VIN."\t\t".$h->dailyFee."\t\t".$h->reservationLength."\t\t".($h->reservationLength*$h->dailyFee)."\n";
+				$carName = $cars[$count]['modelYear']." ".$cars[$count]['make']." ".$cars[$count]['model'];
+				$carName = str_pad($carName, 31);
+				$invoice = "".$invoice."\t".$carName."\t\t";
+				$invoice = "".$invoice.$h->dailyFee."\t\t".$h->reservationLength."\t\t\t\t\t\t".($h->reservationLength*$h->dailyFee)."\n";
 				$total = $total + $h->reservationLength*$h->dailyFee;
+				$count = $count + 1;
 			}
-			$invoice = "".$invoice."Total:\t\t\t\t\t\t".$total;
-			$invoice = "".$invoice."\nThank you for your continued patronage.\nRegards,\nThe KTCS Team";
+			$invoice = "".$invoice."\tTotal:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t".$total;
+			$invoice = "".$invoice."\n\nThank you for your continued patronage.\nRegards,\nThe KTCS Team";
 
 			if(!mail($user['email'], "KTCS Invoice", $invoice, $headers)){
 				return "Failed to deliver email. Please check that the user has entered a valid email.";
 			}
+
+			//for testing
+			//$file = fopen("temp", 'w');
+			//fwrite($file, $invoice);
+			//fclose($file);
 
 			return "Invoice sent successfully.";
 		}
