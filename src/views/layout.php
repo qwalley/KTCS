@@ -4,6 +4,12 @@
 <html lang="en">
 <head>
 	<title>K-Town Car Share</title>
+
+	<style type="text/css">
+		table, th, td {
+   			border: 1px solid black;
+		}
+	</style>
 </head>
 <body>
 	<header>

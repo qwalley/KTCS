@@ -8,6 +8,11 @@
 			return $data;
 		}
 
+		private function normalize_date($date) {
+			$date = str_replace('-', '', $date);
+			return $date;
+		}
+
 		public function addcar() {
 			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
 			$add_message = "";
@@ -149,6 +154,191 @@
 				}
 			}
 			require_once('views/pages/admin_pages/car_reservations.php');
+		}
+
+		public function lotcars() {
+			$lotNo_failed = "";
+			$result_message = "";
+			$cars = NULL;
+
+			$lotNo = "";
+			$validquery = true;
+
+			if($_SERVER["REQUEST_METHOD"] == "POST"){
+				if(empty($_POST["lotNo"])){
+					$VIN_failed = "Required Field";
+					$validquery = false;
+				}
+				else {
+			  		$lotNo = AdminController::test_input($_POST["lotNo"]);
+				}
+			}
+			else{
+				$validquery = false;
+			}
+
+			if($validquery){
+				$cars = AdminModel::lotcars($lotNo);
+
+				if(count($cars) == 0){
+					$result_message = "There are no cars in lot ".$lotNo;
+				}
+				else{
+					$result_message = "Listed below are the cars in lot ".$lotNo;
+				}
+			}
+			require_once('views/pages/admin_pages/lot_cars.php');
+		}
+
+		public function datereservations () {
+			$date_failed = "";
+			$result_message = "";
+			$reservations = NULL;
+
+			$date = "";
+			$validquery = true;
+
+			if($_SERVER["REQUEST_METHOD"] == "POST"){
+				if(empty($_POST["date"])){
+					$date_failed = "Required Field";
+					$validquery = false;
+				}
+				else {
+			  		$date = AdminController::test_input($_POST["date"]);
+				}
+			}
+			else{
+				$validquery = false;
+			}
+
+			if($validquery){
+				$reservations = AdminModel::datereservations(AdminController::normalize_date($date));
+
+				if(count($reservations) == 0){
+					$result_message = "There are no reservations on ".$date;
+				}
+				else{
+					$result_message = "Listed below are the reservations on ".$date;
+				}
+			}
+			require_once('views/pages/admin_pages/date_reservations.php');
+		}
+
+		public function damagedcars() {
+			$result_message = "";
+			$cars = NULL;
+
+			$cars = AdminModel::damagedcars();
+
+			if(count($cars) == 0){
+				$result_message = "There are no damaged cars.";
+			}
+			else{
+				$result_message = "Listed below are all the damaged cars.";
+			}
+
+			require_once('views/pages/admin_pages/dm_cars.php');
+		}
+
+		public function carhistory() {
+			$VIN_failed = "";
+			$result_message = "";
+			$reservations = NULL;
+
+			$VIN = "";
+			$validquery = true;
+
+			if($_SERVER["REQUEST_METHOD"] == "POST"){
+				if(empty($_POST["VIN"])){
+					$VIN_failed = "Required Field";
+					$validquery = false;
+				}
+				else {
+			  		$VIN = AdminController::test_input($_POST["VIN"]);
+				}
+			}
+			else{
+				$validquery = false;
+			}
+
+			if($validquery){
+				$rh = AdminModel::carhistory($VIN);
+
+				if(count($rh) == 0){
+					$result_message = "There is no rental history for the car ".$VIN;
+				}
+				else{
+					$result_message = "Listed below is the rental history for the car ".$VIN;
+				}
+			}
+			require_once('views/pages/admin_pages/car_history.php');
+		}
+
+		public function minmaxrentals(){
+			$result_message = "";
+			$mincar = NULL;
+			$maxcar = NULL;
+
+			$mincar = AdminModel::minmaxrentals(true);
+			$maxcar = AdminModel::minmaxrentals(false);
+
+			require_once('views/pages/admin_pages/minmax_rentals.php');
+		}
+
+		public function maintenancecars() {
+			$result_message = "";
+			$cars = NULL;
+
+			$cars = AdminModel::maintenancecars();
+
+			if(count($cars) == 0){
+				$result_message = "There are no cars requiring scheduled maintenance.";
+			}
+			else{
+				$result_message = "Listed below are all the cars requiring scheduled maintenance.";
+			}
+
+			require_once('views/pages/admin_pages/dm_cars.php');
+		}
+
+		public function userinvoice(){
+			$memberID_failed = $monthStart_failed = $monthEnd_failed = "";
+			$result_message = "";
+
+			$memberID = $monthStart = $monthEnd = "";
+			$validquery = true;
+
+			if($_SERVER["REQUEST_METHOD"] == "POST"){
+				if(empty($_POST["memberID"])){
+					$memberID_failed = "Required Field";
+					$validquery = false;
+				}
+				else {
+			  		$memberID = AdminController::test_input($_POST["memberID"]);
+				}
+				if(empty($_POST["monthStart"])){
+					$monthStart_failed = "Required Field";
+					$validquery = false;
+				}
+				else {
+			  		$monthStart = AdminController::test_input($_POST["monthStart"]);
+				}
+				if(empty($_POST["monthEnd"])){
+					$monthEnd_failed = "Required Field";
+					$validquery = false;
+				}
+				else {
+			  		$monthEnd = AdminController::test_input($_POST["monthEnd"]);
+				}
+			}
+			else{
+				$validquery = false;
+			}
+
+			if($validquery){
+				$result_message = AdminModel::userinvoice($memberID, $monthStart, $monthEnd);
+			}
+			require_once('views/pages/admin_pages/user_invoice.php');
 		}
   	}
 ?>

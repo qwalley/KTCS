@@ -46,6 +46,37 @@
 			require_once('views/pages/admin_pages/car_reservations.php');
 		}
 
+		public function lotcars () {
+			$lotNo_failed = "";
+			$result_message = "";
+			$cars = NULL;
+
+			require_once('views/pages/admin_pages/lot_cars.php');
+		}
+
+		public function datereservations () {	
+			$date_failed = "";
+			$result_message = "";
+			$reservations = NULL;
+
+			require_once('views/pages/admin_pages/date_reservations.php');
+		}
+
+		public function carhistory () {
+			$VIN_failed = "";
+			$result_message = "";
+			$rh = NULL;
+
+			require_once('views/pages/admin_pages/car_history.php');
+		}
+
+		public function userinvoice () {
+			$memberID_failed = $monthStart_failed = $monthEnd_failed = "";
+			$result_message = "";
+
+			require_once('views/pages/admin_pages/user_invoice.php');
+		}
+
 		public function login () {
 			$email = $password = $attempt = "";
 			$email_failed = $password_failed = $login_failed = "";
