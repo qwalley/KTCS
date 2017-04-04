@@ -11,10 +11,6 @@
 				$controller = new PagesController();
 			break;
 
-			case 'db_access' : 
-				$controller = new DBAccessController(Database::getInstance());
-			break;
-
 			case 'not_found' : 
 				$controller = new NotFoundController();
 			break;
@@ -26,8 +22,7 @@
 
 	// A list of existing controllers and their actions
 	$controllers = array (
-		'pages' => ['home', 'error', 'login'],
-		'db_access' => ['verify_login', 'register_user'],
+		'pages' => ['home', 'error', 'login', 'logout', 'register'],
 		'not_found' => ['error']
 		);
 

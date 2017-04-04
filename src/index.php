@@ -4,6 +4,7 @@
 <?php
 	require_once('connection.php');
 
+	session_start();
 	// determine if specific request has been made
 	if(isset($_GET['controller']) && isset($_GET['action'])) {
 		$controller = $_GET['controller'];

@@ -1,18 +1,26 @@
 <!-- filename: home_views.php -->
 <!-- authors: Will Alley -->
 
-<div id="home_view">
-	<p><?php
-	if ($session) {
-		echo "Hello Member #".$_SESSION['user_info']['ID'];
-	}
-	?></p>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Home</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+	<div class="col-md-6">    
+		<p>
+		<?php 
+			if(isset($_SESSION['user_info'])) {
+				$user_info = $_SESSION['user_info'];
+				echo 'Welcome ' . $user_info['name'];
+			}
+		?>
+		</p>
+	</div>
 	
+	<div class="col-md-6">    
 
-	<p>You are on the home page.</p>
-
-	<!-- URLs beginning with '?' are relative to the root folder,
-	and can be used to set request $_GET variables-->
-	<a href="?controller=pages&action=imaginary_action">An Action Error</a>
-	<a href="?controller=imaginary_controller&action=imaginary_action">A Controller Error</a>
+	</div>
 </div>

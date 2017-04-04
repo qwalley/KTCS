@@ -6,11 +6,6 @@
 
 		// define actions that belong to this controller
 		public function home () {
-			$session = false;
-			session_start();
-			if (isset($_SESSION['user_info'])) {
-				$session = true;
-			}
 			// render view
 			require_once('views/pages/home_view.php');
 		}
@@ -21,29 +16,16 @@
 		}
 
 		public function login () {
-			$email = $password = $attempt = "";
-			$email_failed = $password_failed = $login_failed = "";
-			$login_attempt = $failed_attempt = $register_attempt = false;
+			$email = $password = "";
+			$email_failed = $password_failed = $name_failed = $phone_failed = $liscenseNO_failed =
+			$address_failed = $postal_failed = $city_failed = $country_failed = "";
+			$login_failed = $register_failed = '';
 			
 			// check if POST was made
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
-				// determine type of post
-				if (isset($_GET['attempt'])) {
-					$attempt = $_GET['attempt'];
-
-					if ($_GET['attempt'] == "login") {
-						$login_attempt = true;
-					}
-					else if ($_GET['attempt'] == "failed") {
-						$failed_attempt = true;
-					}
-					else if ($_GET['attempt'] == "register") {
-						$register_attempt = true;
-					}
-				}
-			}
-			// handle login attempts
-			if ($login_attempt) {
+				// handle login attempts
+				require_once('models/login_model.php');
+				$login = $session_info = '';
 				// check validity of user inputs
 				if (empty($_POST["email"])) {
 					$email_failed = "required field";
@@ -60,20 +42,115 @@
 				// if login inputs are OK verify credentials
 				if ($email_failed == "" && $password_failed == "") {
 					// hash the password
-					header("Location: http://localhost/KTCS/src?controller=db_access&action=verify_login&email=".$email."&password=".$password);
-					die();
+					// authenticate login
+					$login = new login_model(Database::getInstance());
+					$session_info = $login->verify_login($email, $password);
+					// check returned value
+					if (empty($session_info)) {
+						// print an error message
+						$login_failed = 'The information you entered was incorrect';
+					}
+					else {
+						// successfull login
+						// load user data into $_SESSION
+						$_SESSION['user_info'] = $session_info;
+						// redirect to home page
+						header('Location: ?controller=pages&action=home');
+						die();
+					}
 				}
-			}
-			else if ($failed_attempt) {
-				// TODO make this work
-				$login_failed = "Your email or password was incorrect, try again";
+				// render view
+				require_once('views/pages/login_view.php');
 			}
 
 			// render view
 			require_once('views/pages/login_view.php');
-		}
-
-		}
+		} // end login
+		public function logout () {
+			// delete fields in $_SESSION
+			session_unset();
+			// end the session
+			session_destroy();
+			// redirect to home page
+			header('Location: ?controller=pages&action=home');
+			die();
+		} // end logout
+		public function register () {
+			$name = $phone = $email = $password = $liscenseNO = 
+			$address = $postal = $city = $country = "";
+			$email_failed = $password_failed = $name_failed = $phone_failed = $liscenseNO_failed =
+			$address_failed = $postal_failed = $city_failed = $country_failed = "";
+			$login_failed = $register_failed = '';
+			
+			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+				// check validity of user inputs
+				if (empty($_POST["name"])) {
+					$name_failed = "required field";
+				}
+				else {
+			  		$name = test_input($_POST["name"]);
+				}
+				if (empty($_POST["phone"])) {
+					$phone_failed = "required field";
+				}
+				else {
+			  		$phone = test_input($_POST["phone"]);
+				}
+				if (empty($_POST["email"])) {
+					$email_failed = "required field";
+				}
+				else {
+			  		$email = test_input($_POST["email"]);
+				}
+				if (empty($_POST["password"])) {
+					$password_failed = "required field";
+				}
+				else {
+			  		$password = test_input($_POST["password"]);
+				}
+				if (empty($_POST["liscenseNO"])) {
+					$liscenseNO_failed = "required field";
+				}
+				else {
+			  		$liscenseNO = test_input($_POST["liscenseNO"]);
+				}
+				if (empty($_POST["address"])) {
+					$liscenseNO_failed = "required field";
+				}
+				else {
+			  		$liscenseNO = test_input($_POST["liscenseNO"]);
+				}
+				// if login inputs are OK verify credentials
+				if ($email_failed == "" && $password_failed == "" && $name_failed == "" && $phone_failed == "" && $liscenseNO_failed == "" &&
+					$address_failed == "" && $postal_failed == "" && $city_failed == "" && $country_failed == "") {
+					// hash the password
+					$register = new register_model(Database::getInstance());
+					if ($register->register_user($email, $password, $attempt, $name, $phone, $liscenseNO, $address, $postal, $city, $country)){
+						// log the newly crate user in
+						$login = new login_model(Database::getInstance());
+						$session_info = $login->verify_login($email, $password);
+						// check returned value
+						if (empty($session_info)) {
+							// print an error message
+							$register_failed = 'There is something wrong with the server, please try again later';
+						}
+						else {
+							// successfull login
+							// load user data into $_SESSION
+							$_SESSION['user_info'] = $session_info;
+							// redirect to home page
+							header('Location: ?controller=pages&action=home');
+							die();
+						}
+					}
+					// if adding user fails
+					$register_failed = 'There is something wrong with the server, please try again later';
+				}
+				// render view
+				require_once('views/pages/login_view.php');
+			}
+		} // end register_user
+	}
 	function test_input($data) {
 		$data = trim($data);
 		$data = stripslashes($data);

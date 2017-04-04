@@ -1,30 +1,77 @@
 <!-- filename: login_view.php-->
 <!-- authors: Will Alley -->
 
-<div id="login_view">
-	<p><?php echo $login_failed ?></p>
-	<p> Login...</p>
-	<form method="post" action="?controller=pages&action=login&attempt=login">
-		email: <input type="text" name="email">
-		<span class="error"><?php echo $email_failed ?></span>
-		<br>
-		password: <input type="text" name="password">
-		<span class="error"><?php echo $password_failed ?></span>
-		<br>
-		<input type="submit" name="login">
-	</form>
-	<p> or register </p>
-	<form method="post" action="?controller=pages&action=login&attempt=register">
-		email: <input type="text" name="email">
-		<br>
-		password: <input type="text" name="password">
-		<br>
-		name: <input type="text" name="name">
-		<br>
-		phone: <input type="text" name="phone">
-		<br>
-		driver's liscense number: <input type="text" name="liscenseNo">
-		<br>
-		<input type="submit" name="register">
-	</form>
+<div class="row">
+	<div class="col-md-6">
+		<h2 class="page-header">Login</h2>
+		<p><?php echo $login_failed ?></p>
+		<form method="post" action="?controller=pages&action=login">
+			<div class="form-group">
+				<label for="l1">email:</label>
+				<span class="error"><?php echo $email_failed ?></span>
+				<input type="text" name="email" class="form-control" id="l1">
+			</div>
+			<div class="form-group">
+				<label for="l2">password:</label>
+				<span class="error"><?php echo $password_failed ?></span>
+				<input type="password" name="password" class="form-control" id="l2">
+			</div>
+			<button type="submit" class="btn btn-default">Login</button>
+		</form>
+	</div>
+	<div class="col-md-6">
+		<h2 class="page-header">Register</h2>
+		<p><?php echo $register_failed ?></p>
+		<form method="post" action="?controller=pages&action=login">
+			<div class="form-group">
+				<label for="r3">name:</label>
+				<span class="error"><?php echo $name_failed ?></span>
+				<input type="text" name="name" class="form-control" id="r3">
+			</div>
+			<div class="form-group">
+				<label for="r4">phone:</label>
+				<span class="error"><?php echo $phone_failed ?></span>
+				<input type="text" name="phone" class="form-control" id="r4">
+			</div>
+			<div class="form-group">
+				<label for="r1">email:</label>
+				<span class="error"><?php echo $email_failed ?></span>
+				<input type="text" name="email" class="form-control" id="r1">
+			</div>
+			<div class="form-group">
+				<label for="r2">password:</label>
+				<span class="error"><?php echo $password_failed ?></span>
+				<input type="text" name="password" class="form-control" id="r2">
+			</div>
+			<div class="form-group">
+				<label for="r5">liscence number:</label>
+				<span class="error"><?php echo $liscenseNO_failed ?></span>
+				<input type="text" name="liscenceNO" class="form-control" id="r5">
+			</div>
+			<div class="form-group">
+				<label for="r6">address:</label>
+				<span class="error"><?php echo $address_failed ?></span>
+				<input type="text" name="addres" class="form-control" id="r6">
+			</div>
+			<div class="form-group">
+				<label for="r7">postal code:</label>
+				<span class="error"><?php echo $postal_failed ?></span>
+				<input type="text" name="postal" class="form-control" id="r7">
+			</div>
+			<div class="form-group">
+				<label for="r8">city:</label>
+				<span class="error"><?php echo $city_failed ?></span>
+				<input type="text" name="addres" class="form-control" id="r8">
+			</div>
+			<div class="form-group">
+				<label for="r9">country:</label>
+				<span class="error"><?php echo $country_failed ?></span>
+				<input type="text" name="addres" class="form-control" id="r9">
+			</div>
+			<button type="submit" class="btn btn-default">Register</button>
+		</form>
+	</div>
 </div>
+
+
+
