@@ -84,7 +84,7 @@
 			}
 
 			if($validquery){
-				header("Location: http://localhost/KTCS/src?model=admin&action=addcar&VIN=".$VIN."&make=".$make."&model=".$model."&modelYear=".$modelYear."&dailyFee=".$dailyFee."&lotNo=".$lotNo);
+				header("Location: http://localhost/KTCS/src?controller=admin&action=addcar&VIN=".$VIN."&make=".$make."&model=".$model."&modelYear=".$modelYear."&dailyFee=".$dailyFee."&lotNo=".$lotNo);
 				die();
 			}
 

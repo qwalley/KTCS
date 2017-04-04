@@ -12,7 +12,8 @@
 			break;
 
 			case 'admin' :
-				$controller = new AdminModel(Database::getInstance());
+				require_once('models/admin_model.php');
+				$controller = new AdminController(Database::getInstance());
 			break;
 
 			case 'db_access' : 
