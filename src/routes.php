@@ -11,6 +11,15 @@
 				$controller = new PagesController();
 			break;
 
+			case 'admin' :
+				require_once('models/admin_model.php');
+				$controller = new AdminController(Database::getInstance());
+			break;
+
+			case 'db_access' : 
+				$controller = new DBAccessController(Database::getInstance());
+			break;
+
 			case 'not_found' : 
 				$controller = new NotFoundController();
 			break;
@@ -22,7 +31,11 @@
 
 	// A list of existing controllers and their actions
 	$controllers = array (
-		'pages' => ['home', 'error', 'login', 'logout', 'register'],
+		'pages' => ['home', 'error', 'login', 'logout', 'register',
+		 	'admin', 'addcar', 'commentresponse', 'carreservations', 'lotcars', 'datereservations', 'carhistory', 'userinvoice'],
+		'admin' => ['addcar', 'commentresponse', 'carreservations', 'lotcars', 'datereservations', 'damagedcars',
+		 'carhistory', 'minmaxrentals', 'maintenancecars', 'userinvoice'],
+		'db_access' => ['verify_login', 'register_user'],
 		'not_found' => ['error']
 		);
 

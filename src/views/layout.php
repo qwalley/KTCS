@@ -4,7 +4,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +30,6 @@
 </head>
 
 <body>
-
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-static-top navbar-inverse" role="navigation" style="margin-bottom: 0">
@@ -45,7 +43,7 @@
                 <a class="navbar-brand" href="/">K-Town Car Share</a>
             </div>
             <!-- /.navbar-header -->
-
+            <a href="?controller=pages&action=admin">Administrator Page</a>
         <?php if (false) { echo 
             '<ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
@@ -320,7 +318,6 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="./public/js/sb-admin-2.js"></script>
-
 </body>
 
 </html>
