@@ -62,13 +62,13 @@
 		const maintenanceCarsSQL =
 			'SELECT Car.*
 				FROM Car INNER JOIN (SELECT lastrental.VIN AS VIN
-					FROM (SELECT VIN, odometer, MAX(date) AS maxdate
+					FROM (SELECT VIN, MAX(odometer) AS maxod
 						FROM maintenance
 						GROUP BY VIN) AS lastmaintenance
-					INNER JOIN (SELECT VIN, endingOdometer, MAX(date) AS maxdate
+					INNER JOIN (SELECT VIN, MAX(endingOdometer) AS maxod
 						FROM rentalhistory
 						GROUP BY VIN) AS lastrental ON lastmaintenance.VIN = lastrental.VIN
-					WHERE (lastrental.endingOdometer - lastmaintenance.odometer) >= 5000) AS maintenancecars ON Car.VIN = maintenancecars.VIN';
+						WHERE (lastrental.maxod - lastmaintenance.maxod) >= 5000) AS maintenancecars ON Car.VIN = maintenancecars.VIN';
 		
 		const userInvoiceSQL =
 			'SELECT rentalhistory.*, Car.dailyFee
