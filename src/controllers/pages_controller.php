@@ -103,7 +103,7 @@
 					$login = new login_model(Database::getInstance());
 					$session_info = $login->verify_login($email, $password);
 					// check returned value
-					if (empty($session_info)) {
+					if ($session_info['ID'] == '') {
 						// print an error message
 						$login_failed = 'The information you entered was incorrect';
 					}
