@@ -83,21 +83,28 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-car fa-fw"></i> Administrator Actions<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="?controller=pages&action=fleet">Fleet Maintenance</a>
-                                </li>
-                                <li>
-                                    <a href="?controller=pages&action=records">Records</a>
-                                </li>
-                                <li>
-                                    <a href="?controller=pages&action=customer">Customer Service</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                        <?php 
+                            if (isset($_SESSION['user_info'])) {
+                                if ($user_info['admin'] == 1) {
+                                    echo 
+                                        '<li>
+                                            <a href="#"><i class="fa fa-car fa-fw"></i> Administrator Actions<span class="fa arrow"></span></a>
+                                            <ul class="nav nav-second-level">
+                                                <li>
+                                                    <a href="?controller=pages&action=fleet">Fleet Maintenance</a>
+                                                </li>
+                                                <li>
+                                                    <a href="?controller=pages&action=records">Records</a>
+                                                </li>
+                                                <li>
+                                                    <a href="?controller=pages&action=customer">Customer Service</a>
+                                                </li>
+                                            </ul>
+                                            <!-- /.nav-second-level -->
+                                        </li>';
+                                } // edn if admin
+                            } // if logged in
+                        ?>
                         <li>
                             <?php
                                 // if a user is logged in, display a link to logout

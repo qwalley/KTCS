@@ -22,14 +22,14 @@ if (mysqli_connect_errno())
 	die();
 }
 
-mysqli_query($cxn, "drop table Car;");
-mysqli_query($cxn, "drop table ParkingLocation;");
+mysqli_query($cxn, "drop table Reservation;");
 mysqli_query($cxn, "drop table Maintenance;");
+mysqli_query($cxn, "DROP TABLE Response;");
 mysqli_query($cxn, "drop table Comment;");
 mysqli_query($cxn, "drop table RentalHistory;");
-mysqli_query($cxn, "drop table Reservation;");
+mysqli_query($cxn, "drop table Car;");
+mysqli_query($cxn, "drop table ParkingLocation;");
 mysqli_query($cxn, "drop table Member;");
-mysqli_query($cxn, "DROP TABLE RESPONSE;");
 
 mysqli_query($cxn, "create table Car
 	(VIN varchar(20),
@@ -84,12 +84,14 @@ mysqli_query($cxn, "create table Comment
 mysqli_query($cxn, "create table RentalHistory
 	(VIN VARCHAR(20) NOT NULL,
 	memberID INT NOT NULL,
-	date DATE NOT NULL,
+	pickup DATETIME NOT NULL,
+	dropoff DATETIME,
 	startingOdometer INT NOT NULL,
-	endingOdometer INT NOT NULL,
-	StatusOnReturn CHAR(10) NOT NULL,
-	reservationLength INT NOT NULL,
-	PRIMARY KEY(VIN, memberID, date));");
+	endingOdometer INT,
+	StatusOnPickup CHAR(10) NOT NULL,
+	StatusOnReturn CHAR(10),
+	active BOOLEAN NOT NULL,
+	PRIMARY KEY(VIN, memberID, pickup));");
 
 mysqli_query($cxn, "create table Reservation
 	(reservationNo INT NOT NULL AUTO_INCREMENT,
@@ -106,38 +108,37 @@ mysqli_query($cxn, "CREATE TABLE Response
 	response TEXT,
 	PRIMARY KEY (responseNo));");
 
-
-mysqli_query($cxn, "ALTER TABLE Car
-	(ADD foreign key (lotNo) references ParkingLocation(lotNo));");
-
-mysqli_query($cxn, "ALTER TABLE Maintainence
-	(ADD foreign key (VIN) references Car(VIN));");
+mysqli_query($cxn, "ALTER TABLE Maintenance
+	ADD foreign key (VIN) references Car(VIN)");
 
 mysqli_query($cxn, "ALTER TABLE Comment
-	(ADD FOREIGN KEY (VIN) REFERENCES CAR (VIN),
-	 ADD FOREIGN KEY(memberID) REFERENCES MEMBER (memberID));");
+	ADD FOREIGN KEY (VIN) REFERENCES CAR (VIN),
+	ADD FOREIGN KEY(memberID) REFERENCES MEMBER (memberID)");
 
 mysqli_query($cxn, "ALTER TABLE RentalHistory
-	(ADD FOREIGN KEY (VIN) REFERENCES CAR (VIN),
-	 ADD FOREIGN KEY(memberID) REFERENCES MEMBER (memberID));");
+	ADD FOREIGN KEY (VIN) REFERENCES CAR (VIN),
+	 ADD FOREIGN KEY(memberID) REFERENCES MEMBER (memberID)");
 
 mysqli_query($cxn, "ALTER TABLE Reservation
-	(ADD foreign key (VIN) references Car(VIN),
-	 ADD foreign key (memberID) references Member(memberID));");
+	ADD foreign key (VIN) references Car(VIN),
+	 ADD foreign key (memberID) references Member(memberID)");
 
 mysqli_query($cxn, "ALTER TABLE Response
-	(ADD FOREIGN KEY (commentNo) REFERENCES Comment (commentNo));");
+	ADD FOREIGN KEY (commentNo) REFERENCES Comment (commentNo)");
 
+mysqli_query($cxn, "ALTER TABLE Car
+	ADD foreign key (lotNo) references ParkingLocation(lotNo)");
+
+
+mysqli_query($cxn, "insert into ParkingLocation values
+	('1', '46 Montreal Street', 'K7K3E6', 'Kingston', 'Canada', '69'),
+	('2', '3901 Churn Lane', 'K0H3E3', 'Kingston', 'Canada', '1');");
 
 mysqli_query($cxn, "insert into Car values
 	('1', 'test', 'test', '1950', '0.01', '1'),
 	('AHHHHHHHHHHHHHH10', 'Matel', 'Barbie Jeep', '2001', '0.99', '1'),
 	('1HGBH41JXMN109186', 'AmishAirlines', 'Milk Cart XV', '2017', '99.99', '1'),
 	('B33SB33SB33SB333S', 'So Many', 'Bees', '2007', '4.20', '2');");
-
-mysqli_query($cxn, "insert into ParkingLocation values
-	('1', '46 Montreal Street', 'K7K3E6', 'Kingston', 'Canada', '69'),
-	('2', '3901 Churn Lane', 'K0H3E3', 'Kingston', 'Canada', '1');");
 
 mysqli_query($cxn, "insert into Maintenance values
 	('1HGBH41JXMN109186', '2017-01-13 12:01:33', '420', 'repair', 'Racoon trapped inside.'),
@@ -152,15 +153,15 @@ mysqli_query($cxn, "insert into Member values
 	(NULL, 'Jane Doe', '8819926382', 'nobody@email.com', 'guest', '0', 'J12341234512345', '60', '10 Nowhere Street', 'Y2K3R9', 'Kingston', 'Canada');");
 
 mysqli_query($cxn, "insert into RentalHistory values
-	('1HGBH41JXMN109186', '1', '2017-03-02', '10000', '10001', 'normal', '1'),
-	('AHHHHHHHHHHHHHH10', '3', '2017-03-20', '5010', '7600', 'damaged', 5),
-	('1HGBH41JXMN109186', '2', '2017-03-03', '10001', '12500', 'normal', '2'),
-	('1HGBH41JXMN109186', '3', '2017-03-06', '12500', '50000', 'NR', '10');");
+	('1HGBH41JXMN109186', '1', '2017-03-02 02:34:11', '2017-03-03 02:34:11', '10000', '10001', 'normal', 'normal', '0'),
+	('AHHHHHHHHHHHHHH10', '3', '2017-03-20 02:34:11', '2017-03-07 02:34:11', '5010', '7600', 'normal', 'damaged', '0'),
+	('1HGBH41JXMN109186', '2', '2017-03-03 02:34:11', '2017-03-04 02:34:11', '10001', '12500', 'normal', 'normal', '0'),
+	('1HGBH41JXMN109186', '3', '2017-03-06 02:34:11', '2017-03-12 02:34:11', '12500', '50000', 'normal', 'NR', '0');");
 
 mysqli_query($cxn, "insert into Comment values
-	('1HGBH41JXMN109186', '1', '2017-03-02 23:59:59', '1', 'Could barely get the car out of the driveway before I had to get out. Not good.'),
-	('1HGBH41JXMN109186', '2', '2017-03-07 11:30:14', '3', NULL),
-	('1HGBH41JXMN109186', '3', '2017-03-16 02:00:00', '5', 'I literally never stopped driving the car. Loved it!');");
+	(NULL, '1HGBH41JXMN109186', '1', '2017-03-02 23:59:59', '1', 'Could barely get the car out of the driveway before I had to get out. Not good.'),
+	(NULL, '1HGBH41JXMN109186', '2', '2017-03-07 11:30:14', '3', NULL),
+	(NULL, '1HGBH41JXMN109186', '3', '2017-03-16 02:00:00', '5', 'I literally never stopped driving the car. Loved it!');");
 
 mysqli_query($cxn, "INSERT INTO Response values
 	(NULL, '1', 'Sorry to hear about your bad experience.');");
