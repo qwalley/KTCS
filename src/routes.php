@@ -33,7 +33,7 @@
 	$controllers = array (
 		'pages' => ['home', 'error', 'login', 'logout', 'register',
 		 	'admin', 'addcar', 'commentresponse', 'carreservations', 'lotcars', 'datereservations', 'carhistory', 'userinvoice'],
-		'admin' => ['addcar', 'commentresponse', 'carreservations', 'lotcars', 'datereservations', 'damagedcars',
+		'admin' => ['fleet', 'customer', 'records', 'addcar', 'commentresponse', 'carreservations', 'lotcars', 'datereservations', 'damagedcars',
 		 'carhistory', 'minmaxrentals', 'maintenancecars', 'userinvoice'],
 		'db_access' => ['verify_login', 'register_user'],
 		'not_found' => ['error']
