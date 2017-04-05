@@ -12,18 +12,11 @@
 			$date = str_replace('-', '', $date);
 			return $date;
 		}
-		public function fleet() {
-			require_once('views/pages/admin_pages/fleet_maintenance.php');
-		}
-		public function customer() {
-			require_once('views/pages/admin_pages/customer_service.php');
-		}
-		public function records() {
-				require_once('views/pages/admin_pages/records.php');
-		}
+
 		public function addcar() {
 			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
-			$add_message = "";
+			$cars = $mincar = $maxcar = NULL;
+			$result_message = "";
 
 			$VIN = $make = $model = $modelYear = $dailyFee = $lotNo = "";
 			$validquery = true;
@@ -80,18 +73,18 @@
 				$result = AdminModel::addcar($VIN, $make, $model, $modelYear, $dailyFee, $lotNo);
 
 				if($result){
-					$add_message = "Car successfully added to fleet.";
+					$result_message = "Car successfully added to fleet.";
 				}
 				else{
-					$add_message = "Failed to add car to the fleet.";
+					$result_message = "Failed to add car to the fleet.";
 				}
 			}
-			require_once('views/pages/admin_pages/add_car.php');
+			require_once('views/pages/admin_pages/fleet_maintenance.php');
     	}
 
 		public function commentresponse() {
-			$commentNo_failed = $response_failed = "";
-			$response_message = "";
+			$memberID_failed = $monthStart_failed = $monthEnd_failed = $commentNo_failed = $response_failed = "";
+			$result_message = "";
 
 			$commentNo = $response = "";
 			$validquery = true;
@@ -120,20 +113,20 @@
 				$result = AdminModel::commentresponse($commentNo, $response);
 
 				if($result){
-					$response_message = "Response submitted successfully.";
+					$result_message = "Response submitted successfully.";
 				}
 				else{
-					$response_message = "Failed to submit response.";
+					$result_message = "Failed to submit response.";
 				}
 			}
 			
-			require_once('views/pages/admin_pages/comment_response.php');
+			require_once('views/pages/admin_pages/customer_service.php');
 		}
 
 		public function carreservations() {
-			$VIN_failed = "";
+			$VIN_failed = $date_failed = $lotNo_failed = "";
 			$result_message = "";
-			$reservations = NULL;
+			$cars = $rh = $reservations = NULL;
 
 			$VIN = "";
 			$validquery = true;
@@ -161,13 +154,13 @@
 					$result_message = "Listed below are the reservations for the vehicle ".$VIN;
 				}
 			}
-			require_once('views/pages/admin_pages/car_reservations.php');
+			require_once('views/pages/admin_pages/records.php');
 		}
 
 		public function lotcars() {
-			$lotNo_failed = "";
+			$VIN_failed = $date_failed = $lotNo_failed = "";
 			$result_message = "";
-			$cars = NULL;
+			$cars = $rh = $reservations = NULL;
 
 			$lotNo = "";
 			$validquery = true;
@@ -195,13 +188,13 @@
 					$result_message = "Listed below are the cars in lot ".$lotNo;
 				}
 			}
-			require_once('views/pages/admin_pages/lot_cars.php');
+			require_once('views/pages/admin_pages/records.php');
 		}
 
 		public function datereservations () {
-			$date_failed = "";
+			$VIN_failed = $date_failed = $lotNo_failed = "";
 			$result_message = "";
-			$reservations = NULL;
+			$cars = $rh = $reservations = NULL;
 
 			$date = "";
 			$validquery = true;
@@ -229,12 +222,13 @@
 					$result_message = "Listed below are the reservations on ".$date;
 				}
 			}
-			require_once('views/pages/admin_pages/date_reservations.php');
+			require_once('views/pages/admin_pages/records.php');
 		}
 
 		public function damagedcars() {
+			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
+			$cars = $mincar = $maxcar = NULL;
 			$result_message = "";
-			$cars = NULL;
 
 			$cars = AdminModel::damagedcars();
 
@@ -245,13 +239,13 @@
 				$result_message = "Listed below are all the damaged cars.";
 			}
 
-			require_once('views/pages/admin_pages/dm_cars.php');
+			require_once('views/pages/admin_pages/fleet_maintenance.php');
 		}
 
 		public function carhistory() {
-			$VIN_failed = "";
+			$VIN_failed = $date_failed = $lotNo_failed = "";
 			$result_message = "";
-			$reservations = NULL;
+			$cars = $rh = $reservations = NULL;
 
 			$VIN = "";
 			$validquery = true;
@@ -279,23 +273,24 @@
 					$result_message = "Listed below is the rental history for the car ".$VIN;
 				}
 			}
-			require_once('views/pages/admin_pages/car_history.php');
+			require_once('views/pages/admin_pages/records.php');
 		}
 
 		public function minmaxrentals(){
+			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
+			$cars = $mincar = $maxcar = NULL;
 			$result_message = "";
-			$mincar = NULL;
-			$maxcar = NULL;
 
 			$mincar = AdminModel::minmaxrentals(true);
 			$maxcar = AdminModel::minmaxrentals(false);
 
-			require_once('views/pages/admin_pages/minmax_rentals.php');
+			require_once('views/pages/admin_pages/fleet_maintenance.php');
 		}
 
 		public function maintenancecars() {
+			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
+			$cars = $mincar = $maxcar = NULL;
 			$result_message = "";
-			$cars = NULL;
 
 			$cars = AdminModel::maintenancecars();
 
@@ -306,11 +301,11 @@
 				$result_message = "Listed below are all the cars requiring scheduled maintenance.";
 			}
 
-			require_once('views/pages/admin_pages/dm_cars.php');
+			require_once('views/pages/admin_pages/fleet_maintenance.php');
 		}
 
 		public function userinvoice(){
-			$memberID_failed = $monthStart_failed = $monthEnd_failed = "";
+			$memberID_failed = $monthStart_failed = $monthEnd_failed = $commentNo_failed = $response_failed = "";
 			$result_message = "";
 
 			$memberID = $monthStart = $monthEnd = "";
@@ -346,7 +341,16 @@
 			if($validquery){
 				$result_message = AdminModel::userinvoice($memberID, $monthStart, $monthEnd);
 			}
-			require_once('views/pages/admin_pages/user_invoice.php');
+			require_once('views/pages/admin_pages/customer_service.php');
+		}
+
+		public function carhr () {
+			if(empty($_POST['history'])){
+				AdminController::carreservations();
+			}
+			else{
+				AdminController::carhistory();
+			}
 		}
   	}
 ?>

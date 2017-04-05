@@ -14,61 +14,38 @@
 			require_once('views/pages/error_view.php');
 		}
 
-		public function admin () {
-			require_once('views/pages/admin_view.php');
-		}
-
-		public function addcar () {
-			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
-			$add_message = "";
-			
-			require_once('views/pages/admin_pages/add_car.php');
-		}
-
 		public function commentresponse () {
-			$commentNo_failed = $response_failed = "";
-			$response_message = "";
+
 			
 			require_once('views/pages/admin_pages/comment_response.php');
 		}
 
-		public function carreservations () {
-			$VIN_failed = "";
-			$result_message = "";
-			$reservations = NULL;
-			
-			require_once('views/pages/admin_pages/car_reservations.php');
-		}
-
-		public function lotcars () {
-			$lotNo_failed = "";
-			$result_message = "";
-			$cars = NULL;
-
-			require_once('views/pages/admin_pages/lot_cars.php');
-		}
-
-		public function datereservations () {	
-			$date_failed = "";
-			$result_message = "";
-			$reservations = NULL;
-
-			require_once('views/pages/admin_pages/date_reservations.php');
-		}
-
-		public function carhistory () {
-			$VIN_failed = "";
-			$result_message = "";
-			$rh = NULL;
-
-			require_once('views/pages/admin_pages/car_history.php');
-		}
-
 		public function userinvoice () {
-			$memberID_failed = $monthStart_failed = $monthEnd_failed = "";
-			$result_message = "";
 
 			require_once('views/pages/admin_pages/user_invoice.php');
+		}
+
+		public function fleet() {
+			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
+			$cars = $mincar = $maxcar = NULL;
+			$result_message = "";
+
+			require_once('views/pages/admin_pages/fleet_maintenance.php');
+		}
+
+		public function customer() {
+			$memberID_failed = $monthStart_failed = $monthEnd_failed = $commentNo_failed = $response_failed = "";
+			$result_message = "";
+			
+			require_once('views/pages/admin_pages/customer_service.php');
+		}
+		
+		public function records() {
+			$VIN_failed = $date_failed = $lotNo_failed = "";
+			$result_message = "";
+			$cars = $rh = $reservations = NULL;
+
+			require_once('views/pages/admin_pages/records.php');
 		}
 
 		public function login () {

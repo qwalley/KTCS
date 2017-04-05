@@ -87,13 +87,13 @@
                             <a href="#"><i class="fa fa-car fa-fw"></i> Administrator Actions<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="?controller=admin&action=fleet">Fleet Maintenance</a>
+                                    <a href="?controller=pages&action=fleet">Fleet Maintenance</a>
                                 </li>
                                 <li>
-                                    <a href="?controller=admin&action=records">Records</a>
+                                    <a href="?controller=pages&action=records">Records</a>
                                 </li>
                                 <li>
-                                    <a href="?controller=admin&action=customer">Customer Service</a>
+                                    <a href="?controller=pages&action=customer">Customer Service</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
