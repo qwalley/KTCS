@@ -43,7 +43,6 @@
                 <a class="navbar-brand" href="/KTCS/src">K-Town Car Share</a>
             </div>
             <!-- /.navbar-header -->
-            <a href="?controller=pages&action=admin">Administrator Page</a>
         <?php if (false) { echo 
             '<ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
@@ -274,7 +273,21 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-
+                        <li>
+                            <a href="#"><i class="fa fa-car fa-fw"></i> Administrator Actions<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="?controller=admin&action=fleet">Fleet Maintenance</a>
+                                </li>
+                                <li>
+                                    <a href="?controller=admin&action=records">Records</a>
+                                </li>
+                                <li>
+                                    <a href="?controller=admin&action=customer">Customer Service</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                         <li>
                             <?php
                                 // if a user is logged in, display a link to logout

@@ -248,6 +248,7 @@
 			}
 
 			$invoice = "Hello ".$user['name'].",\n\tOutlined below is a receipt for your use of the KTCS service:\n\n";
+
 			$invoice = "".$invoice."\t\t\tDaily Fee\tReservation Period\t\tCharge\t\tCar\n";
 
 			foreach($rh as $h){

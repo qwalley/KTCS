@@ -12,7 +12,15 @@
 			$date = str_replace('-', '', $date);
 			return $date;
 		}
-
+		public function fleet() {
+			require_once('views/pages/admin_pages/fleet_maintenance.php');
+		}
+		public function customer() {
+			require_once('views/pages/admin_pages/customer_service.php');
+		}
+		public function records() {
+				require_once('views/pages/admin_pages/records.php');
+		}
 		public function addcar() {
 			$VIN_failed = $make_failed = $model_failed = $modelYear_failed = $dailyFee_failed = $lotNo_failed= "";
 			$add_message = "";

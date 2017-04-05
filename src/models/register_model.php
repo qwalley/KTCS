@@ -6,46 +6,54 @@
 		private $db = NULL;
 		private $checkExisting = NULL;
 		private $addUser = NULL;
-		private $existingSQL = 
-			'SELECT email, liscenseNO
+		private $emailSQL = 
+			'SELECT email
 			FROM member
-			WHERE email = :email or liscenseNO = :liscenseNO';
+			WHERE email = :email';
+		private $liscenseSQL =
+			'SELECT liscenseNO
+			FROM member
+			WHERE liscenseNO = :liscenseNO';
 		private $addSQL = 
-			'INSERT into member values
-			(NULL, ':name', ':phone', ':email', ':password', '0', ':liscenseNO', '60', ':address', ':postal', ':city', ':country');'
+			"INSERT into member values
+			(NULL, :name, :phone, :email, :password, 0, :liscenseNO, 60, :address, :postal, :city, :country);";
 
 		public function __construct($pdo) {
 			$this->db = $pdo;
-			$this->checkExisting = $this->db->prepare($this->existingSQL);
+			$this->checkEmail = $this->db->prepare($this->emailSQL);
+			$this->checkLiscense = $this->db->prepare($this->liscenseSQL);
 			$this->addUser = $this->db->prepare($this->addSQL);
 		}
 
 		// attempt to add new user to DB
-		public function register_user ($name, $phone, $email, $password, $liscenseNO, $adress, $postal, $city, $country) {
-			$results = '';
+		public function register_user ($name, $phone, $email, $password, $liscenseNO, $address, $postal, $city, $country) {
+			$result1 = '';
+			$result2 = '';
 			$emailExists = true;
 			$liscenseNOExists = true;
 			$success = false;
 
-			$this->checkExisting->execute(array(':email' => $email, ':liscenseNO' => $liscenseNO));
-			$results = $this->checkExisting->fetch();
-			// NULL means that the email or liscense has not been registered
-			if ($results[0] == NULL) {
+			$this->checkEmail->execute(array(':email' => $email));
+			$result1 = $this->checkEmail->fetch();
+			// NULL means that the email  has not been registered
+			if ($result1 == NULL) {
 				$emailExists = false;
 			}
-			else if ($results[1] != NULL) {
-				$emailExists = false;
+			$this->checkLiscense->execute(array(':liscenseNO' => $liscenseNO));
+			$result2 = $this->checkLiscense->fetch();
+			if ($result2 == NULL) {
+				$liscenseNOExists = false;
 			}
 			// if neither has been registered proceed
 			if (!($emailExists & $liscenseNOExists)) {
 				// confirm that insertion succeeded
 				if ($this->addUser->execute(array(':name' => $name,':phone' => $phone, ':email' => $email, ':password' => $password,
-											'liscenseNO' => $liscenseNO, ':adress' => $adress, ':postal' => $postal, 
+											'liscenseNO' => $liscenseNO, ':address' => $address, ':postal' => $postal, 
 											':city' => $city, ':country' => $country))) {
 					$success = true;
 				}
 			}
-			return success;
+			return $success;
 		} // end register_user
 	}
 ?>

@@ -103,7 +103,7 @@
 					$login = new login_model(Database::getInstance());
 					$session_info = $login->verify_login($email, $password);
 					// check returned value
-					if (empty($session_info)) {
+					if ($session_info['ID'] == '') {
 						// print an error message
 						$login_failed = 'The information you entered was incorrect';
 					}
@@ -172,24 +172,45 @@
 			  		$liscenseNO = test_input($_POST["liscenseNO"]);
 				}
 				if (empty($_POST["address"])) {
-					$liscenseNO_failed = "required field";
+					$address_failed = "required field";
 				}
 				else {
-			  		$liscenseNO = test_input($_POST["liscenseNO"]);
+			  		$address = test_input($_POST["address"]);
+				}
+				if (empty($_POST["postal"])) {
+					$postal_failed = "required field";
+				}
+				else {
+			  		$postal = test_input($_POST["postal"]);
+				}
+				if (empty($_POST["city"])) {
+					$city_failed = "required field";
+				}
+				else {
+			  		$city = test_input($_POST["city"]);
+				}
+				if (empty($_POST["country"])) {
+					$country_failed = "required field";
+				}
+				else {
+			  		$country = test_input($_POST["country"	]);
 				}
 				// if login inputs are OK verify credentials
 				if ($email_failed == "" && $password_failed == "" && $name_failed == "" && $phone_failed == "" && $liscenseNO_failed == "" &&
 					$address_failed == "" && $postal_failed == "" && $city_failed == "" && $country_failed == "") {
 					// hash the password
+					// require proper model
+					require_once('models/register_model.php');
 					$register = new register_model(Database::getInstance());
-					if ($register->register_user($email, $password, $attempt, $name, $phone, $liscenseNO, $address, $postal, $city, $country)){
+					if ($register->register_user($name, $phone, $email, $password, $liscenseNO, $address, $postal, $city, $country)){
+						require_once('models/login_model.php');
 						// log the newly crate user in
 						$login = new login_model(Database::getInstance());
 						$session_info = $login->verify_login($email, $password);
 						// check returned value
-						if (empty($session_info)) {
+						if ($session_info['ID'] == '') {
 							// print an error message
-							$register_failed = 'There is something wrong with the server, please try again later';
+							$register_failed = 'There is a login something wrong with the server, please try again later';
 						}
 						else {
 							// successfull login

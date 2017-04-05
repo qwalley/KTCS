@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- filename: records.php-->
 <!-- authors: Owen Westland -->
 
@@ -90,3 +91,16 @@
 	<?php } ?>
 
 </div>
+=======
+<!-- filename: records.php -->
+<!-- authors: Will Alley -->
+
+<a href="?controller=pages&action=carreservations">View car reservations</a>
+<br>
+<a href="?controller=pages&action=datereservations">Find all reservations on a date</a>
+<br>
+<a href="?controller=pages&action=lotcars">Search for cars by lot</a>
+<br>
+<a href="?controller=pages&action=carhistory">View car rental histories</a>
+<br>
+>>>>>>> cc98646d7bb15caba371115efb479771b5f26cb7

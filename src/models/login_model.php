@@ -31,7 +31,7 @@
 				// prepare return value
 				$session_info = array (
 					"ID" => '',
-					"email" => ''
+					"name" => ''
 					);
 				// populate with results
 				if ($success) {
