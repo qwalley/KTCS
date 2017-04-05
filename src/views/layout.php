@@ -46,11 +46,23 @@
             <!-- /.navbar-header -->
             <?php 
                 if (isset($_SESSION['user_info'])) {
-                    $dropoff = '';
+                    $rental = '';
+                    $dropoff = '<li><a href="?controller=pages&action=dropoff"><i class="fa fa-car fa-fw"></i> Drop Off</a>
+                            </li>';
+                    $pickup = '<li><a href="?controller=pages&action=pickup"><i class="fa fa-car fa-fw"></i> Pickup</a>
+                            </li>';
                     $user_info = $_SESSION['user_info'];
-                    if ($user_info['reservation'] != '') {
-                        $dropoff = '<li><a href="?controller=pages&action=dropoff"><i class="fa fa-car fa-fw"></i> Drop Off</a>
-                                </li>';
+                    if ($user_info['reservation'] != 'none') {
+                        if ($user_info['reservation'] == 'pickup') {
+                            if ($user_info['pickup'] != '') {
+                                $rental = $pickup;
+                            }
+                        }
+                        else if ($user_info['reservation'] == 'dropoff') {
+                            if ($user_info['dropoff'] != '') {
+                                $rental = $dropoff;
+                            }
+                        }
                     }
                     echo 
                     '<ul class="nav navbar-top-links navbar-right">
@@ -61,7 +73,7 @@
                             <ul class="dropdown-menu dropdown-user">
                                 <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                                 </li>'.
-                                $dropoff
+                                $rental
                                 .'<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                                 </li>
                             </ul>

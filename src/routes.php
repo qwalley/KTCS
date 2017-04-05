@@ -27,7 +27,7 @@
 
 	// A list of existing controllers and their actions
 	$controllers = array (
-		'pages' => ['home', 'error', 'login', 'logout', 'register', 'fleet', 'customer', 'records', 'dropoff'],
+		'pages' => ['home', 'error', 'login', 'logout', 'register', 'fleet', 'customer', 'records', 'dropoff', 'pickup'],
 		'admin' => ['addcar', 'commentresponse', 'lotcars', 'datereservations', 'damagedcars', 'minmaxrentals', 'maintenancecars', 'userinvoice', 'carhr'],
 		'not_found' => ['error']
 		);

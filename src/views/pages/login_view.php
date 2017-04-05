@@ -19,11 +19,6 @@
 			<button type="submit" class="btn btn-default">Login</button>
 		</form>
 	</div>
-	<style type="text/css">
-		.half {
-			width: 50%;
-		}
-	</style>
 	<div class="col-md-6">
 		<h2 class="page-header">Register</h2>
 		<p><?php echo $register_failed ?></p>

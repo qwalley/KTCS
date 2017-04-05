@@ -4,20 +4,26 @@
 	class login_model {
 			private $db = NULL;
 			private $authenticate = NULL;
-			private $getReservations = NULL;
+			private $getPickup = NULL;
+			private $getDropoff = NULL;
 			private $authSQL = 
 				'SELECT memberID, email, password, name, admin
 				FROM member
 				WHERE email = :email';
-			private $reservationSQL = 
-				'SELECT VIN, make, model, lotNo 
+			private $pickupSQL = 
+				'SELECT VIN, make, model, lotNo, accessCode 
 				FROM Reservation NATURAL JOIN Car 
 				WHERE memberID = :ID AND startDate = CURDATE()';
+			private $dropoffSQL = 
+				'SELECT VIN, make, model, lotNo, startDate
+				FROM Reservation NATURAL JOIN Car 
+				WHERE memberID = :ID AND startDate + reservationLength = CURDATE()';
 
 			public function __construct($pdo) {
 				$this->db = $pdo;
 				$this->authenticate = $this->db->prepare($this->authSQL);
-				$this->getReservations = $this->db->prepare($this->reservationSQL);
+				$this->getPickup = $this->db->prepare($this->pickupSQL);
+				$this->getDropoff = $this->db->prepare($this->dropoffSQL);
 			}
 
 			// query DB for email and check psswd from $_POST
@@ -28,10 +34,17 @@
 				// returned as [memberID, email, password]
 				// authenticate login info
 				$results = $this->authenticate->fetch();
+				//if query succeeded
 				if (!empty($results)) {
+					// if results match user input
 					if ($results[1] == $email & $results[2] == $password) {
 						$success = true;
-						$currentRes = $this->getReservations->execute(array(':ID' => $results[0]));
+						// chceck for pickups 
+						$this->getPickup->execute(array(':ID' => $results[0]));
+						$pickup = $this->getPickup->fetch();
+						// check for dropoffs
+						$this->getDropoff->execute(array(':ID' => $results[0]));
+						$dropoff = $this->getDropoff->fetch();
 					}
 				}
 				// prepare return value
@@ -39,7 +52,9 @@
 					"ID" => '',
 					"name" => '',
 					"admin" => '',
-					"reservation" => ''
+					"reservation" => 'none',
+					"pickup" => '',
+					"dropoff" => ''
 					);
 				// populate with results
 				if ($success) {
@@ -47,10 +62,17 @@
 					$session_info['name'] = $results[3];
 					$session_info['admin'] = $results[4];
 				}
-				if (empty($currentRes)) {
-					//$session_info['reservation'] = array('VIN' => $currentRes[0], 'make' => $currentRes[1], 
-						//'model' => $currentRes[2], 'lot' => $currentRes[3]);
-					$session_info['reservation'] = '<pre>'. print_r($currentRes) . '</pre>';
+				if (!empty($pickup)) {
+					// set reservation in session
+					$session_info['reservation'] = 'pickup';
+					$session_info['pickup'] = array('VIN' => $pickup[0], 'make' => $pickup[1], 
+						'model' => $pickup[2], 'lot' => $pickup[3], 'code' => $pickup[4]);
+				}
+				else if (!empty($dropoff)) {
+					// set reservation type in session
+					$session_info['reservation'] = 'dropoff';
+					$session_info['dropoff'] = array('VIN' => $dropoff[0], 'make' => $dropoff[1], 
+						'model' => $dropoff[2], 'lot' => $dropoff[3], 'pickup' => $dropoff[4]);
 				}
 				// else return empty array
 				return $session_info;

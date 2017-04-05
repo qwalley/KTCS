@@ -14,10 +14,10 @@
 			require_once('views/pages/error_view.php');
 		}
 
-		public function dropoff () {
-			require_once('views/pages/dropoff_view.php');
-		}
-
+// ==============================================================================
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< admin actions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// ==============================================================================
+		
 		public function commentresponse () {
 
 			
@@ -51,6 +51,98 @@
 
 			require_once('views/pages/admin_pages/records.php');
 		}
+
+// ==============================================================================
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< user actions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// ==============================================================================
+
+		public function dropoff () {
+			$odometer_failed = $status_failed = '';
+			$odometer = $status = '';
+			$success = $valid = false;
+			// check for user_info
+			if (isset($_SESSION['user_info'])) {
+				$user_info = $_SESSION['user_info'];
+				// check for dropoff
+				if ($user_info['dropoff'] != '') {
+					$dropoff = $user_info['dropoff'];
+				}
+			}
+
+			// handle form submissions
+			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+				// validate fields
+				if (empty($_POST['odometer'])) {
+					$odometer_failed = "required field";
+				}
+				else {
+					$odometer = $_POST['odometer'];
+				}
+				if (empty($_POST['odometer'])) {
+					$odometer_failed = "required field";
+				}
+				else {
+					$status = $_POST['status'];
+				}
+				// if fields are proper
+				if ($odometer_failed == '' && $status_failed == '') {
+					$valid = true;
+					// instantiate the rental model to access neessary queries
+					require_once('models/rental_model.php');
+					$rental = new RentalModel(Database::getInstance());
+					// run dropoff query
+					if ($rental->dropoff($dropoff['VIN'], $user_info['ID'], $dropoff['pickup'], $odometer, $status)) {
+						$success = true;
+					}
+				}
+			}
+			require_once('views/pages/dropoff_view.php');
+		}
+
+		public function pickup () {
+			$odometer_failed = $status_failed = '';
+			$odometer = $status = '';
+			$success = $valid = false;
+			// check for user_info
+			if (isset($_SESSION['user_info'])) {
+				$user_info = $_SESSION['user_info'];
+				// check for dropoff
+				if ($user_info['pickup'] != '') {
+					$pickup = $user_info['pickup'];
+				}
+			}
+
+			// handle form submissions
+			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+				// validate fields
+				if (empty($_POST['odometer'])) {
+					$odometer_failed = "required field";
+				}
+				else {
+					$odometer = $_POST['odometer'];
+				}
+				if (empty($_POST['odometer'])) {
+					$odometer_failed = "required field";
+				}
+				else {
+					$status = $_POST['status'];
+				}
+				// if fields are proper
+				if ($odometer_failed == '' && $status_failed == '') {
+					$valid = true;
+					// instantiate the rental model to access neessary queries
+					require_once('models/rental_model.php');
+					$rental = new RentalModel(Database::getInstance());
+					// run pickup query
+					if ($rental->pickup($pickup['VIN'], $user_info['ID'], $odometer, $status)) {
+						$success = true;
+						$_SESSION['user_info']['pickup'] = '';
+					}
+				}
+			}
+			require_once('views/pages/pickup_view.php');
+		}
+
 
 		public function login () {
 			$email = $password = "";
