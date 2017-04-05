@@ -16,7 +16,7 @@
         const dateReservationsSQL =
             'SELECT *
 				FROM Reservation
-				WHERE date >= :date AND date <= :date + reservationLength';
+				WHERE startDate >= :startDate AND startDate <= :startDate + reservationLength';
 
         const addCarSQL =
             'INSERT INTO Car VALUES
@@ -32,7 +32,7 @@
 					FROM (SELECT VIN, MAX(date) AS maxdate
 						FROM maintenance
 						GROUP BY VIN) AS lastmaintenance
-					INNER JOIN (SELECT VIN, MAX(date) AS maxdate
+					INNER JOIN (SELECT VIN, MAX(dropoff) AS maxdate
 						FROM rentalhistory
 						WHERE StatusOnReturn = \'damaged\' OR StatusOnReturn = \'NR\'
 						GROUP BY VIN) AS lastrental ON lastmaintenance.VIN = lastrental.VIN
@@ -41,7 +41,7 @@
 		const carHistorySQL =
 			'SELECT *
 				FROM rentalhistory
-				WHERE VIN = :VIN';
+				WHERE VIN = :VIN AND active = \'0\'';
 
 	    const maxRentalsSQL =
 			'SELECT Car.*
@@ -73,7 +73,7 @@
 		const userInvoiceSQL =
 			'SELECT rentalhistory.*, Car.dailyFee
 				FROM rentalhistory LEFT JOIN Car ON rentalhistory.VIN = Car.VIN
-				WHERE memberID = :memberID AND date >= :monthStart AND date < :monthEnd';
+				WHERE memberID = :memberID AND startDate >= :monthStart AND startDate < :monthEnd';
 
 		const userSQL =
 			'SELECT *
@@ -112,7 +112,7 @@
 			$query->execute(array(':VIN' => $VIN));
 
 			foreach($query->fetchAll() as $res) {
-        		$reservations[] = new Reservation($res['VIN'], $res['memberID'], $res['date'], $res['accessCode'], $res['reservationLength']);
+        		$reservations[] = new Reservation($res['VIN'], $res['memberID'], $res['startDate'], $res['accessCode'], $res['reservationLength']);
       		}
 
 			return $reservations;
@@ -133,16 +133,16 @@
 			return $cars;
 		}
 
-		public function datereservations ($date){
+		public function datereservations ($startDate){
 			require_once('admin_data.php');
 			$db = Database::getInstance();
 			$query = $db->prepare(AdminModel::dateReservationsSQL);
 			$reservations = NULL;
 
-			$query->execute(array(':date' => $date));
+			$query->execute(array(':startDate' => $startDate));
 
 			foreach($query->fetchAll() as $res) {
-        		$reservations[] = new Reservation($res['VIN'], $res['memberID'], $res['date'], $res['accessCode'], $res['reservationLength']);
+        		$reservations[] = new Reservation($res['VIN'], $res['memberID'], $res['startDate'], $res['accessCode'], $res['reservationLength']);
       		}
 
 			return $reservations;
@@ -172,7 +172,7 @@
 			$query->execute(array(":VIN" => $VIN));
 
 			foreach($query->fetchAll() as $h) {
-        		$rh[] = new RentalHistory($h['VIN'], $h['memberID'], $h['date'], $h['startingOdometer'], $h['endingOdometer'], $h['StatusOnReturn'], $h['reservationLength'], 0);
+        		$rh[] = new RentalHistory($h['VIN'], $h['memberID'], $h['pickup'], $h['dropoff'], $h['startingOdometer'], $h['endingOdometer'], $h['StatusOnPickup'], $h['StatusOnReturn'], $h['reservationLength'], $h['active'], 0);
       		}
 
 			return $rh;
@@ -233,7 +233,7 @@
 			$userquery->execute(array(":memberID" => $memberID));
 
 			foreach($historyquery->fetchAll() as $h) {
-        		$rh[] = new RentalHistory($h['VIN'], $h['memberID'], $h['date'], $h['startingOdometer'], $h['endingOdometer'], $h['StatusOnReturn'], $h['reservationLength'], $h['dailyFee']);
+        		$rh[] = new RentalHistory($h['VIN'], $h['memberID'], $h['pickup'], $h['dropoff'], $h['startingOdometer'], $h['endingOdometer'], $h['StatusOnPickup'], $h['StatusOnReturn'], $h['reservationLength'], $h['active'], $h['dailyFee']);
 				$carquery->execute(array(":VIN" => $h['VIN']));
 				$cars[] = $carquery->fetch();
       		}

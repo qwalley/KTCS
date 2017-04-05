@@ -90,13 +90,13 @@
                             <a href="/KTCS/src"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-car fa-fw"></i> Car Lots<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-car fa-fw"></i> Rent A Car<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="<?php echo '?' . htmlspecialchars(SID) ?>">Foo</a>
+                                    <a href="?controller=pages&action=lotcars">Rent By Location</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo '?' . htmlspecialchars(SID) ?>">Bar</a>
+                                    <a href="<?php echo '?' . htmlspecialchars(SID) ?>">Rent By Date</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

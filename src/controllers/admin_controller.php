@@ -127,6 +127,7 @@
 			$VIN_failed = $date_failed = $lotNo_failed = "";
 			$result_message = "";
 			$cars = $rh = $reservations = NULL;
+			$fromDate = false;
 
 			$VIN = "";
 			$validquery = true;
@@ -161,6 +162,7 @@
 			$VIN_failed = $date_failed = $lotNo_failed = "";
 			$result_message = "";
 			$cars = $rh = $reservations = NULL;
+			$fromDate = false;
 
 			$lotNo = "";
 			$validquery = true;
@@ -195,6 +197,7 @@
 			$VIN_failed = $date_failed = $lotNo_failed = "";
 			$result_message = "";
 			$cars = $rh = $reservations = NULL;
+			$fromDate = true;
 
 			$date = "";
 			$validquery = true;
@@ -246,6 +249,7 @@
 			$VIN_failed = $date_failed = $lotNo_failed = "";
 			$result_message = "";
 			$cars = $rh = $reservations = NULL;
+			$fromDate = false;
 
 			$VIN = "";
 			$validquery = true;

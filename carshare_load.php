@@ -90,6 +90,7 @@ mysqli_query($cxn, "create table RentalHistory
 	endingOdometer INT,
 	StatusOnPickup CHAR(10) NOT NULL,
 	StatusOnReturn CHAR(10),
+	reservationLength INT NOT NULL,
 	active BOOLEAN NOT NULL,
 	PRIMARY KEY(VIN, memberID, pickup));");
 
@@ -149,14 +150,14 @@ mysqli_query($cxn, "insert into Maintenance values
 mysqli_query($cxn, "insert into Member values
 	(NULL, 'Bob Benson', '1112223333', 'bobbenson@email.com', 'guest', '0', 'X11111111111111', '60', '2222 Somewhere Lane', 'X1X1X1', 'Kingston', 'Canada'),
 	(NULL, 'Jim Jameson', '9218675309', 'jimmyJ@email.com', 'guest', '1', 'Y22222222222222', '0', '8866 Daedric Crescent', 'Y2Y2Y2', 'Kingston', 'Canada'),
-	(NULL, 'Owen Westland', '1113332222', 'owenwestland@gmail.com', 'guest', '0', 'X11111111111112', '60', '111 Easy Street', 'X7X7X7', 'Kingston', 'Canada'), 
+	(NULL, 'Owen Westland', '1113332222', 'owenwestland@gmail.com', 'guest', '1', 'X11111111111112', '60', '111 Easy Street', 'X7X7X7', 'Kingston', 'Canada'), 
 	(NULL, 'Jane Doe', '8819926382', 'nobody@email.com', 'guest', '0', 'J12341234512345', '60', '10 Nowhere Street', 'Y2K3R9', 'Kingston', 'Canada');");
 
 mysqli_query($cxn, "insert into RentalHistory values
-	('1HGBH41JXMN109186', '1', '2017-03-02 02:34:11', '2017-03-03 02:34:11', '10000', '10001', 'normal', 'normal', '0'),
-	('AHHHHHHHHHHHHHH10', '3', '2017-03-20 02:34:11', '2017-03-07 02:34:11', '5010', '7600', 'normal', 'damaged', '0'),
-	('1HGBH41JXMN109186', '2', '2017-03-03 02:34:11', '2017-03-04 02:34:11', '10001', '12500', 'normal', 'normal', '0'),
-	('1HGBH41JXMN109186', '3', '2017-03-06 02:34:11', '2017-03-12 02:34:11', '12500', '50000', 'normal', 'NR', '0');");
+	('1HGBH41JXMN109186', '1', '2017-03-02 02:34:11', '2017-03-03 02:34:11', '10000', '10001', 'normal', 'normal', '1', '0'),
+	('AHHHHHHHHHHHHHH10', '3', '2017-03-20 02:34:11', '2017-03-27 02:34:11', '5010', '7600', 'normal', 'damaged', '7', '0'),
+	('1HGBH41JXMN109186', '2', '2017-03-03 02:34:11', '2017-03-04 02:34:11', '10001', '12500', 'normal', 'normal', '1', '0'),
+	('1HGBH41JXMN109186', '3', '2017-03-06 02:34:11', '2017-03-12 02:34:11', '12500', '50000', 'normal', 'NR', '6', '0');");
 
 mysqli_query($cxn, "insert into Comment values
 	(NULL, '1HGBH41JXMN109186', '1', '2017-03-02 23:59:59', '1', 'Could barely get the car out of the driveway before I had to get out. Not good.'),
