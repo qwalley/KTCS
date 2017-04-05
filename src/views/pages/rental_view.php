@@ -1,0 +1,42 @@
+<!-- filename: rental_view.php-->
+<!-- authors: Jack East -->
+
+<div id="lot_cars_view">
+	<p>Find all the cars in a lot:</p>
+	<form method="post" action="?controller=pages&action=lotcars">
+		Lot Number <input type="text" name="lotNo">
+		<span class="error"><?php echo $lotNo_failed ?></span>
+		<input type="submit" value="Search">
+	</form>
+
+	<p><?php 
+		echo $result_message;
+	?></p>
+
+	<?php if(count($cars) != 0) { ?>
+			<?php foreach($cars as $car) { ?>
+			<form class="form-inline" method="post" action="?controller=pages&action=reserve">
+				<div class="form-group">
+					<label for="l1"><?php echo $car->make.' '.$car->model.' '.$car->modelYear.' '.$car->dailyFee ?></label>
+					<input type="hidden" name="VIN" value="<?php echo $car->VIN ?>" class="form-control" id="l1">
+				</div>
+				<div class="form-group">
+					<label for="l2">From:</label>
+					<span><?php echo $date_failed ?></span>
+					<input type="date" name="startDate" class="form-control" id="l2">
+				</div>
+				<div class="form-group">
+					<label for="l3">for:</label>
+					<span><?php echo $length_failed ?></span>
+					<input type="number" min="1" step="1" name="length" class="form-control" id="l3">
+				</div>
+				<div class="form-group">
+					<label for="l4"></label>
+					<input type="hidden" name="userID" value="<?php echo $_SESSION['user_info']['ID'] ?>" class="form-control" id="l4">
+				</div>
+					<button type="submit" class="btn btn-default">Reserve</button>
+			</form>
+			<?php } ?>	
+	<?php } ?>
+
+</div>

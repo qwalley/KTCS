@@ -8,6 +8,7 @@
 		// create instance of controller
 		switch($controller) {
 			case 'pages' : 
+				require_once('models/admin_model.php');
 				$controller = new PagesController();
 			break;
 
@@ -27,7 +28,7 @@
 
 	// A list of existing controllers and their actions
 	$controllers = array (
-		'pages' => ['home', 'error', 'login', 'logout', 'register', 'fleet', 'customer', 'records', 'dropoff'],
+		'pages' => ['home', 'error', 'login', 'logout', 'register', 'fleet', 'customer', 'records', 'dropoff', 'lotcars', 'rental', 'reserve'],
 		'admin' => ['addcar', 'commentresponse', 'lotcars', 'datereservations', 'damagedcars', 'minmaxrentals', 'maintenancecars', 'userinvoice', 'carhr'],
 		'not_found' => ['error']
 		);
