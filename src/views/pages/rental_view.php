@@ -6,7 +6,17 @@
 	<form method="post" action="?controller=pages&action=lotcars">
 		Lot Number <input type="text" name="lotNo">
 		<span class="error"><?php echo $lotNo_failed ?></span>
-		<input type="submit" value="Search">
+		<div class="form-group">
+			<label for="l2">From:</label>
+			<span><?php echo $date_failed ?></span>
+			<input type="date" name="startDate" class="form-control" id="l2">
+		</div>
+		<div class="form-group">
+			<label for="l3">for:</label>
+			<span><?php echo $length_failed ?></span>
+			<input type="number" min="1" step="1" name="length" class="form-control" id="l3">
+		</div>
+		<button type="submit" class="btn btn-default pull-right">Search</button>
 	</form>
 
 	<p><?php 
@@ -19,16 +29,6 @@
 				<div class="form-group">
 					<label for="l1"><?php echo $car->make.' '.$car->model.' '.$car->modelYear.' '.$car->dailyFee ?></label>
 					<input type="hidden" name="VIN" value="<?php echo $car->VIN ?>" class="form-control" id="l1">
-				</div>
-				<div class="form-group">
-					<label for="l2">From:</label>
-					<span><?php echo $date_failed ?></span>
-					<input type="date" name="startDate" class="form-control" id="l2">
-				</div>
-				<div class="form-group">
-					<label for="l3">for:</label>
-					<span><?php echo $length_failed ?></span>
-					<input type="number" min="1" step="1" name="length" class="form-control" id="l3">
 				</div>
 				<div class="form-group">
 					<label for="l4"></label>

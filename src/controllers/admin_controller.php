@@ -8,7 +8,7 @@
 			return $data;
 		}
 
-		private function normalize_date($date) {
+		public function normalize_date($date) {
 			$date = str_replace('-', '', $date);
 			return $date;
 		}
@@ -70,14 +70,7 @@
 			}
 
 			if($validquery){
-				$result = AdminModel::addcar($VIN, $make, $model, $modelYear, $dailyFee, $lotNo);
-
-				if($result){
-					$result_message = "Car successfully added to fleet.";
-				}
-				else{
-					$result_message = "Failed to add car to the fleet.";
-				}
+				$result_message = AdminModel::addcar($VIN, $make, $model, $modelYear, $dailyFee, $lotNo);
 			}
 			require_once('views/pages/admin_pages/fleet_maintenance.php');
     	}
