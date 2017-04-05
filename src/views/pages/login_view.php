@@ -22,7 +22,7 @@
 	<div class="col-md-6">
 		<h2 class="page-header">Register</h2>
 		<p><?php echo $register_failed ?></p>
-		<form method="post" action="?controller=pages&action=login">
+		<form method="post" action="?controller=pages&action=register">
 			<div class="form-group">
 				<label for="r3">name:</label>
 				<span class="error"><?php echo $name_failed ?></span>
@@ -41,17 +41,17 @@
 			<div class="form-group">
 				<label for="r2">password:</label>
 				<span class="error"><?php echo $password_failed ?></span>
-				<input type="text" name="password" class="form-control" id="r2">
+				<input type="password" name="password" class="form-control" id="r2">
 			</div>
 			<div class="form-group">
 				<label for="r5">liscence number:</label>
 				<span class="error"><?php echo $liscenseNO_failed ?></span>
-				<input type="text" name="liscenceNO" class="form-control" id="r5">
+				<input type="text" name="liscenseNO" class="form-control" id="r5">
 			</div>
 			<div class="form-group">
 				<label for="r6">address:</label>
 				<span class="error"><?php echo $address_failed ?></span>
-				<input type="text" name="addres" class="form-control" id="r6">
+				<input type="text" name="address" class="form-control" id="r6">
 			</div>
 			<div class="form-group">
 				<label for="r7">postal code:</label>
@@ -61,12 +61,12 @@
 			<div class="form-group">
 				<label for="r8">city:</label>
 				<span class="error"><?php echo $city_failed ?></span>
-				<input type="text" name="addres" class="form-control" id="r8">
+				<input type="text" name="city" class="form-control" id="r8">
 			</div>
 			<div class="form-group">
 				<label for="r9">country:</label>
 				<span class="error"><?php echo $country_failed ?></span>
-				<input type="text" name="addres" class="form-control" id="r9">
+				<input type="text" name="country" class="form-control" id="r9">
 			</div>
 			<button type="submit" class="btn btn-default">Register</button>
 		</form>

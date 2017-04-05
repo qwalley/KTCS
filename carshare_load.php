@@ -64,7 +64,7 @@ mysqli_query($cxn, "create table Member
 	 email VARCHAR(100) NOT NULL,
 	 password VARCHAR(100) NOT NULL,
 	 admin BOOLEAN NOT NULL,
-	 licenseNO CHAR(20) NOT NULL,
+	 liscenseNO CHAR(20) NOT NULL,
 	 monthlyFee INT NOT NULL,
 	 address VARCHAR(255) NOT NULL,
 	 postalCode CHAR(6) NOT NULL,

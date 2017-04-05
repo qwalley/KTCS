@@ -13,15 +13,15 @@
 		private $liscenseSQL =
 			'SELECT liscenseNO
 			FROM member
-			WHERE liscenseNO = :liscenseNO'
+			WHERE liscenseNO = :liscenseNO';
 		private $addSQL = 
-			'INSERT into member values
-			(NULL, ':name', ':phone', ':email', ':password', '0', ':liscenseNO', '60', ':address', ':postal', ':city', ':country');'
+			"INSERT into member values
+			(NULL, :name, :phone, :email, :password, 0, :liscenseNO, 60, :address, :postal, :city, :country);";
 
 		public function __construct($pdo) {
 			$this->db = $pdo;
 			$this->checkEmail = $this->db->prepare($this->emailSQL);
-			$this->checkLiscense = $this->db->prepare($this->liscenceSQL);
+			$this->checkLiscense = $this->db->prepare($this->liscenseSQL);
 			$this->addUser = $this->db->prepare($this->addSQL);
 		}
 
@@ -34,26 +34,26 @@
 			$success = false;
 
 			$this->checkEmail->execute(array(':email' => $email));
-			$result1 = $this->checkExisting->fetch();
+			$result1 = $this->checkEmail->fetch();
 			// NULL means that the email  has not been registered
-			if ($result1[0] == NULL) {
+			if ($result1 == NULL) {
 				$emailExists = false;
 			}
 			$this->checkLiscense->execute(array(':liscenseNO' => $liscenseNO));
 			$result2 = $this->checkLiscense->fetch();
-			if ($result2[0] == NULL) {
+			if ($result2 == NULL) {
 				$liscenseNOExists = false;
 			}
 			// if neither has been registered proceed
 			if (!($emailExists & $liscenseNOExists)) {
 				// confirm that insertion succeeded
 				if ($this->addUser->execute(array(':name' => $name,':phone' => $phone, ':email' => $email, ':password' => $password,
-											'liscenseNO' => $liscenseNO, ':adress' => $adress, ':postal' => $postal, 
+											'liscenseNO' => $liscenseNO, ':address' => $address, ':postal' => $postal, 
 											':city' => $city, ':country' => $country))) {
 					$success = true;
 				}
 			}
-			return success;
+			return $success;
 		} // end register_user
 	}
 ?>
