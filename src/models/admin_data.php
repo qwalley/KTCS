@@ -2,14 +2,14 @@
     class Reservation {
         public $VIN;
         public $memberID;
-        public $date;
+        public $startDate;
         public $accessCode;
         public $reservationLength;
 
-        public function __construct ($VIN, $memberID, $date, $accessCode, $reservationLength){
+        public function __construct ($VIN, $memberID, $startDate, $accessCode, $reservationLength){
             $this->VIN = $VIN;
             $this->memberID = $memberID;
-            $this->date = $date;
+            $this->startDate = $startDate;
             $this->accessCode = $accessCode;
             $this->reservationLength = $reservationLength;
         }
@@ -36,21 +36,27 @@
     class RentalHistory {
         public $VIN;
         public $memberID;
-        public $date;
+        public $pickup;
+        public $dropoff;
         public $startingOdometer;
         public $endingOdometer;
+        public $StatusOnPickup;
         public $StatusOnReturn;
         public $reservationLength;
+        public $active;
         public $dailyFee;
 
-        public function __construct ($VIN, $memberID, $date, $startingOdometer, $endingOdometer, $StatusOnReturn, $reservationLength, $dailyFee){
+        public function __construct ($VIN, $memberID, $pickup, $dropoff, $startingOdometer, $endingOdometer, $StatusOnPickup, $StatusOnReturn, $reservationLength, $active, $dailyFee){
             $this->VIN = $VIN;
             $this->memberID = $memberID;
-            $this->date =$date;
+            $this->pickup = $pickup;
+            $this->dropoff = $dropoff; 
             $this->startingOdometer = $startingOdometer;
             $this->endingOdometer = $endingOdometer;
+            $this->StatusOnPickup = $StatusOnPickup;
             $this->StatusOnReturn = $StatusOnReturn;
             $this->reservationLength = $reservationLength;
+            $this->active = $active;
             $this->dailyFee = $dailyFee;
         }
     }
