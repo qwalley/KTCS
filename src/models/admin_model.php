@@ -261,14 +261,14 @@
 			$invoice = "".$invoice."\tTotal:\t\t\t\t\t\t\t\t\t\t$".$total;
 			$invoice = "".$invoice."\n\nThank you for your continued patronage.\nRegards,\nThe KTCS Team";
 
-			//if(!mail($user['email'], "KTCS Invoice", $invoice, $headers)){
-			//	return "Failed to deliver email. Please check that the user has entered a valid email.";
-			//}
+			if(!mail($user['email'], "KTCS Invoice", $invoice, $headers)){
+				return "Failed to deliver email. Please check that the user has entered a valid email.";
+			}
 
 			//for testing
-			$file = fopen("temp", 'w');
-			fwrite($file, $invoice);
-			fclose($file);
+			//$file = fopen("temp", 'w');
+			//fwrite($file, $invoice);
+			//fclose($file);
 
 			return "Invoice sent successfully.";
 		}
