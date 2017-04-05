@@ -46,7 +46,12 @@
             <!-- /.navbar-header -->
             <?php 
                 if (isset($_SESSION['user_info'])) {
+                    $dropoff = '';
                     $user_info = $_SESSION['user_info'];
+                    if ($user_info['reservation'] != '') {
+                        $dropoff = '<li><a href="?controller=pages&action=dropoff"><i class="fa fa-car fa-fw"></i> Drop Off</a>
+                                </li>';
+                    }
                     echo 
                     '<ul class="nav navbar-top-links navbar-right">
                         <li class="dropdown">
@@ -55,8 +60,9 @@
                             </a>
                             <ul class="dropdown-menu dropdown-user">
                                 <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                                </li>
-                                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                </li>'.
+                                $dropoff
+                                .'<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                                 </li>
                             </ul>
                         </li>

@@ -15,6 +15,9 @@
 			if(isset($_SESSION['user_info'])) {
 				$user_info = $_SESSION['user_info'];
 				echo 'Welcome ' . $user_info['name'];
+				echo '<pre>';
+				print_r($user_info);
+				echo "</pre>";
 			}
 		?>
 		</p>

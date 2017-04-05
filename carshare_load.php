@@ -97,7 +97,7 @@ mysqli_query($cxn, "create table Reservation
 	(reservationNo INT NOT NULL AUTO_INCREMENT,
 	 VIN VARCHAR(20) NOT NULL,
 	 memberID INT NOT NULL ,
-	 date DATE NOT NULL ,
+	 startDate DATE NOT NULL ,
 	 accessCode CHAR(10) NOT NULL ,
 	 reservationLength INT NOT NULL ,
 	 PRIMARY KEY (reservationNo));");
@@ -170,6 +170,7 @@ mysqli_query($cxn, "insert into Reservation values
 	(NULL, '1HGBH41JXMN109186', '1', '2017-03-09', '123456', '3'),
 	(NULL, '1HGBH41JXMN109186', '2', '2017-03-13', '223344', '5'),
 	(NULL, 'AHHHHHHHHHHHHHH10', '2', '2017-03-07', '666666', '4'),
+	(NULL, 'AHHHHHHHHHHHHHH10', '4', '2017-04-05', '666666', '4'),
 	(NULL, '1HGBH41JXMN109186', '3', '2017-03-29', '987654', '8');");
 echo "finished";
 

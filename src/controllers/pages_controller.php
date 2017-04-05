@@ -14,6 +14,10 @@
 			require_once('views/pages/error_view.php');
 		}
 
+		public function dropoff () {
+			require_once('views/pages/dropoff_view.php');
+		}
+
 		public function commentresponse () {
 
 			
