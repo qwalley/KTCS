@@ -16,10 +16,6 @@
 				$controller = new AdminController(Database::getInstance());
 			break;
 
-			case 'db_access' : 
-				$controller = new DBAccessController(Database::getInstance());
-			break;
-
 			case 'not_found' : 
 				$controller = new NotFoundController();
 			break;

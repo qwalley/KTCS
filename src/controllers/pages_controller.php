@@ -1,6 +1,5 @@
 <!-- filename: pages_controller.php -->
 <!-- authors: Will Alley -->
-
 <?php
 	class PagesController {
 
@@ -111,16 +110,10 @@
 						// successfull login
 						// load user data into $_SESSION
 						$_SESSION['user_info'] = $session_info;
-						// redirect to home page
-						header('Location: ?controller=pages&action=home');
-						die();
+						die('<script type="text/javascript">window.location.href="?controller=pages&action=home";</script>');
 					}
 				}
-				// render view
-				require_once('views/pages/login_view.php');
 			}
-
-			// render view
 			require_once('views/pages/login_view.php');
 		} // end login
 		public function logout () {
@@ -129,8 +122,7 @@
 			// end the session
 			session_destroy();
 			// redirect to home page
-			header('Location: ?controller=pages&action=home');
-			die();
+			die('<script type="text/javascript">window.location.href="?controller=pages&action=home";</script>');
 		} // end logout
 		public function register () {
 			$name = $phone = $email = $password = $liscenseNO = 

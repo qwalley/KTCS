@@ -1,12 +1,11 @@
 <!-- filename: login_model.php -->
 <!-- authors: Will Alley -->
-
-<?php 
+<?php
 	class login_model {
 			private $db = NULL;
 			private $authenticate = NULL;
 			private $authSQL = 
-				'SELECT memberID, email, password, name
+				'SELECT memberID, email, password, name, admin
 				FROM member
 				WHERE email = :email';
 
@@ -31,12 +30,14 @@
 				// prepare return value
 				$session_info = array (
 					"ID" => '',
-					"name" => ''
+					"name" => '',
+					"admin" => ''
 					);
 				// populate with results
 				if ($success) {
 					$session_info['ID'] = $results[0];
 					$session_info['name'] = $results[3];
+					$session_info['admin'] = $results[4];
 				}
 				// else return empty array
 				return $session_info;
