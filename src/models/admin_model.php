@@ -248,17 +248,18 @@
 			}
 
 			$invoice = "Hello ".$user['name'].",\n\tOutlined below is a receipt for your use of the KTCS service:\n\n";
-			$invoice = "".$invoice."\tCar\t\t\t\t\t\t\tDaily Fee\tReservation Period\t\tCharge\n";
+
+			$invoice = "".$invoice."\t\t\tDaily Fee\tReservation Period\t\tCharge\t\tCar\n";
 
 			foreach($rh as $h){
+				$invoice = "".$invoice."\t\t\t$".$h->dailyFee."\t\t".$h->reservationLength."\t\t\t\t\t\t$".($h->reservationLength*$h->dailyFee)."\t\t";
 				$carName = $cars[$count]['modelYear']." ".$cars[$count]['make']." ".$cars[$count]['model'];
-				$carName = str_pad($carName, 34);
-				$invoice = "".$invoice."\t".$carName."\t";
-				$invoice = "".$invoice.$h->dailyFee."\t\t".$h->reservationLength."\t\t\t\t\t".($h->reservationLength*$h->dailyFee)."\n";
+				$carName = str_pad($carName, 31);
+				$invoice = "".$invoice.$carName."\n";
 				$total = $total + $h->reservationLength*$h->dailyFee;
 				$count = $count + 1;
 			}
-			$invoice = "".$invoice."\tTotal:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t".$total;
+			$invoice = "".$invoice."\tTotal:\t\t\t\t\t\t\t\t\t\t$".$total;
 			$invoice = "".$invoice."\n\nThank you for your continued patronage.\nRegards,\nThe KTCS Team";
 
 			if(!mail($user['email'], "KTCS Invoice", $invoice, $headers)){
