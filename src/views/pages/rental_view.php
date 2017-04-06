@@ -44,7 +44,9 @@
 							<input type="hidden" name="lotNo" value="<?php echo $lotNo ?>">
 							<input type="hidden" name="startDate" value="<?php echo $date ?>">
 							<input type="hidden" name="length" value="<?php echo $length ?>">
-							<button type="submit" class="btn btn-default car-spacing">Reserve</button>
+							<?php if(!empty($_SESSION["user_info"])) { ?>
+								<button type="submit" class="btn btn-default car-spacing">Reserve</button>
+							<?php } ?>
 						</form>
 					</div>
 				</div>
