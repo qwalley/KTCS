@@ -73,7 +73,7 @@
 		const userInvoiceSQL =
 			'SELECT rentalhistory.*, Car.dailyFee
 				FROM rentalhistory LEFT JOIN Car ON rentalhistory.VIN = Car.VIN
-				WHERE memberID = :memberID AND startDate >= :monthStart AND startDate < :monthEnd';
+				WHERE memberID = :memberID AND pickup >= :monthStart AND pickup < :monthEnd';
 
 		const userSQL =
 			'SELECT *

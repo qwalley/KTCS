@@ -6,14 +6,17 @@
 			private $authenticate = NULL;
 			private $getPickup = NULL;
 			private $getDropoff = NULL;
+			
 			private $authSQL = 
 				'SELECT memberID, email, password, name, admin
 				FROM member
 				WHERE email = :email';
+
 			private $pickupSQL = 
 				'SELECT VIN, make, model, lotNo, accessCode, reservationLength 
 				FROM Reservation NATURAL JOIN Car 
 				WHERE memberID = :ID AND startDate = CURDATE()';
+
 			private $dropoffSQL = 
 				'SELECT reserved.VIN, reserved.make, reserved.model, reserved.lotNo, RentalHistory.pickup, reserved.reservationNo
 				FROM RentalHistory JOIN (SELECT *

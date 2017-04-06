@@ -171,6 +171,7 @@
 		}
 
 		public function reserve () {
+			require_once('controllers/admin_controller.php');
 			$length_failed = $date_failed = $lotNo_failed = "";
 			$result_message = $success = "";
 			$cars = $rh = $reservations = NULL;
@@ -181,21 +182,8 @@
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
 				require_once('models/ReservationModel.php');
 			  	$lotNo = PagesController::test_input($_POST["lotNo"]);
-
-				if(empty($_POST["startDate"])){
-					$date_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-					$date = $_POST['startDate'];
-				}
-				if(empty($_POST["length"])){
-					$length_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-					$length = $_POST['length'];
-				}
+				$date = PagesController::test_input($_POST["startDate"]);
+				$length = PagesController::test_input($_POST["length"]);
 			}
 			else{
 				$validquery = false;
@@ -206,6 +194,7 @@
 			if($validquery){
 				$user_info = $_SESSION['user_info'];
 				$success = ReservationModel::addReservation($_POST['VIN'], $user_info['ID'], $date, $length);
+				$cars = ReservationModel::lotcars($lotNo, AdminController::normalize_date($date), $length);
 				$result_message = "reservation made!";
 			}
 			require_once('views/pages/rental_view.php');
@@ -252,10 +241,6 @@
 
 			if($validquery){
 				$cars = ReservationModel::lotcars($lotNo, AdminController::normalize_date($date), $length);
-
-				if(count($cars) == 0){
-					$result_message = "There are no cars in that lot over that time period.";
-				}
 			}
 			require_once('views/pages/rental_view.php');
 		}

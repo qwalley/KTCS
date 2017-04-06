@@ -31,6 +31,7 @@
 	</div>
 
 	<div class="col-md-7">
+		<h5><?php echo $result_message ?></h5>
 		<?php if(count($cars) != 0) { ?>
 			<?php foreach($cars as $car) { ?>
 				<div class="row">

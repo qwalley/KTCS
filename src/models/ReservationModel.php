@@ -17,7 +17,8 @@
 				WHERE lotNo = :lotNo) AS lotcars
 				LEFT JOIN(SELECT *
 				FROM Reservation
-				WHERE startDate >= :startDate AND startDate <= :startDate + :reservationLength OR startDate + reservationLength >= :startDate AND startDate + reservationLength <= :startDate + :reservationLength) as resConflicts
+				WHERE startDate >= :startDate AND startDate <= :startDate + :reservationLength OR startDate + reservationLength >= 
+				:startDate AND startDate + reservationLength <= :startDate + :reservationLength) as resConflicts
 				ON lotcars.VIN = resConflicts.VIN
 				WHERE IFNULL(resConflicts.VIN, 0) = 0';
 
