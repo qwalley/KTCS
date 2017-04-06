@@ -132,8 +132,9 @@ mysqli_query($cxn, "ALTER TABLE Car
 
 
 mysqli_query($cxn, "insert into ParkingLocation values
-	('1', '46 Montreal Street', 'K7K3E6', 'Kingston', 'Canada', '69'),
-	('2', '3901 Churn Lane', 'K0H3E3', 'Kingston', 'Canada', '1');");
+	('1', '301Concession Street', 'K7K2C1', 'Kingston', 'Canada', '60'),
+	('2', '195 Willingdon Avenue', 'K7L4H9', 'Kingston', 'Canada', '45'),
+	('3', '981 Division Street', 'K7K 4C8', 'Kingston', 'Canada', '25');");
 
 mysqli_query($cxn, "insert into Car values
 	('1', 'test', 'test', '1950', '0.01', '1'),

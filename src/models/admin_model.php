@@ -85,13 +85,33 @@
 				FROM Car
 				WHERE VIN = :VIN';
 
+		const lotLimitSQL =
+			'SELECT lot.numSpaces AS numSpaces, count.numCars AS numCars
+				FROM (SELECT lotNo, COUNT(VIN) AS numCars
+				FROM Car
+				WHERE lotNo = :lotNo
+				GROUP BY lotNo) AS count
+				INNER JOIN(SELECT lotNo, numSpaces
+				FROM ParkingLocation
+				WHERE lotNo = :lotNo) AS lot
+				ON lot.lotNo = count.lotNo';
+
 		public function addcar ($VIN, $make, $model, $modelYear, $dailyFee, $lotNo) {
             $db = Database::getInstance();
+			$checkquery = $db->prepare(AdminModel::lotLimitSQL);
             $query = $db->prepare(AdminModel::addCarSQL);
+			$check = NULL;
 
-			$query->execute(array(':VIN' => $VIN, ':make' => $make, 'model' => $model, 'modelYear' => $modelYear, 'dailyFee' => $dailyFee, 'lotNo' => $lotNo));
+			$checkquery->execute(array(':lotNo' => $lotNo));
+			$check = $checkquery->fetch();
 
-            return true;
+			if($check['numSpaces'] > $check['numCars']){
+				$query->execute(array(':VIN' => $VIN, ':make' => $make, 'model' => $model, 'modelYear' => $modelYear, 'dailyFee' => $dailyFee, 'lotNo' => $lotNo));
+				return "Car successfully added to fleet.";
+			}
+			else{
+            	return "Car not added. Lot ".$lotNo." is full.";
+			}
 		}
 
         public function commentresponse ($commentNo, $response){
@@ -233,9 +253,11 @@
 			$userquery->execute(array(":memberID" => $memberID));
 
 			foreach($historyquery->fetchAll() as $h) {
-        		$rh[] = new RentalHistory($h['VIN'], $h['memberID'], $h['pickup'], $h['dropoff'], $h['startingOdometer'], $h['endingOdometer'], $h['StatusOnPickup'], $h['StatusOnReturn'], $h['reservationLength'], $h['active'], $h['dailyFee']);
-				$carquery->execute(array(":VIN" => $h['VIN']));
-				$cars[] = $carquery->fetch();
+				if($h['active'] != '1'){
+					$rh[] = new RentalHistory($h['VIN'], $h['memberID'], $h['pickup'], $h['dropoff'], $h['startingOdometer'], $h['endingOdometer'], $h['StatusOnPickup'], $h['StatusOnReturn'], $h['reservationLength'], $h['active'], $h['dailyFee']);
+					$carquery->execute(array(":VIN" => $h['VIN']));
+					$cars[] = $carquery->fetch();
+				}
       		}
 			
 			$user = $userquery->fetch();
