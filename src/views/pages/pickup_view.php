@@ -21,10 +21,10 @@
 		<?php
 			if ($user_info['pickup'] != '') {
 				$car = $user_info['pickup'];
-				echo '<h4>You reserved the'.$car['make'].' '.$car['model'].'</h4>'
+				echo '<h4>You reserved the '.$car['make'].' '.$car['model'].'</h4>';
 			}
 		?>
-		<h3 class="page-header">Helpful Pickup Tips:</h3>;
+		<h3 class="page-header">Helpful Pickup Tips:</h3>
 		<ul>
 		<li>Make note of much much gas there is! You're required to leave as much gas in the car as when you found it.</li>
 		<li>Check for damage! You're required to report the status of the car, so check for small scratches and dents.</li>

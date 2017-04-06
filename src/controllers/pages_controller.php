@@ -106,7 +106,9 @@
 					require_once('models/rental_model.php');
 					$rental = new RentalModel(Database::getInstance());
 					// run dropoff query
-					if ($rental->dropoff($dropoff['VIN'], $user_info['ID'], $dropoff['pickup'], $odometer, $status)) {
+					if ($rental->dropoff($dropoff['VIN'], $user_info['ID'], $dropoff['pickup'], $odometer, $status, $dropoff['resNO'])) {
+						$_SESSION['user_info']['dropoff'] = '';
+						$_SESSION['user_info']['reservation'] = 'none';
 						$success = true;
 					}
 				}
@@ -147,11 +149,21 @@
 					$valid = true;
 					// instantiate the rental model to access neessary queries
 					require_once('models/rental_model.php');
+					require_once('models/login_model.php');
 					$rental = new RentalModel(Database::getInstance());
+					$login = new login_model(Database::getInstance());
 					// run pickup query
-					if ($rental->pickup($pickup['VIN'], $user_info['ID'], $odometer, $status)) {
+					if ($rental->pickup($pickup['VIN'], $user_info['ID'], $odometer, $status, $pickup['length'])) {
 						$success = true;
 						$_SESSION['user_info']['pickup'] = '';
+						$dropoff = $login->checkDropoff($user_info['ID']);
+						$_SESSION['user_info']['dropoff'] = $dropoff;
+						if ($dropoff != '') {
+							$_SESSION['user_info']['reservation'] = 'dropoff';
+						}
+						else {
+							$_SESSION['user_info']['reservation'] = 'none';
+						}
 					}
 				}
 			}

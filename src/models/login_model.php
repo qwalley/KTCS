@@ -11,19 +11,35 @@
 				FROM member
 				WHERE email = :email';
 			private $pickupSQL = 
-				'SELECT VIN, make, model, lotNo, accessCode 
+				'SELECT VIN, make, model, lotNo, accessCode, reservationLength 
 				FROM Reservation NATURAL JOIN Car 
 				WHERE memberID = :ID AND startDate = CURDATE()';
 			private $dropoffSQL = 
-				'SELECT VIN, make, model, lotNo, startDate
-				FROM Reservation NATURAL JOIN Car 
-				WHERE memberID = :ID AND startDate + reservationLength = CURDATE()';
+				'SELECT reserved.VIN, reserved.make, reserved.model, reserved.lotNo, RentalHistory.pickup, reserved.reservationNo
+				FROM RentalHistory JOIN (SELECT *
+				FROM Reservation NATURAL JOIN Car) AS reserved
+				ON RentalHistory.VIN = reserved.VIN AND RentalHistory.memberID = reserved.memberID
+				WHERE RentalHistory.active = 1 AND RentalHistory.memberID = 1';
 
 			public function __construct($pdo) {
 				$this->db = $pdo;
 				$this->authenticate = $this->db->prepare($this->authSQL);
 				$this->getPickup = $this->db->prepare($this->pickupSQL);
 				$this->getDropoff = $this->db->prepare($this->dropoffSQL);
+			}
+
+			public function checkDropoff ($ID) {
+				// check for dropoffs
+				$this->getDropoff->execute(array(':ID' => $ID));
+				$dropoff = $this->getDropoff->fetch();
+				$dropoffData = '';
+
+				if (!empty($dropoff)) {
+					// set reservation type in session
+					$dropoffData = array('VIN' => $dropoff[0], 'make' => $dropoff[1], 
+						'model' => $dropoff[2], 'lot' => $dropoff[3], 'pickup' => $dropoff[4], 'resNO' => $dropoff[5]);
+				}
+				return $dropoffData;
 			}
 
 			// query DB for email and check psswd from $_POST
@@ -66,13 +82,13 @@
 					// set reservation in session
 					$session_info['reservation'] = 'pickup';
 					$session_info['pickup'] = array('VIN' => $pickup[0], 'make' => $pickup[1], 
-						'model' => $pickup[2], 'lot' => $pickup[3], 'code' => $pickup[4]);
+						'model' => $pickup[2], 'lot' => $pickup[3], 'code' => $pickup[4], 'length' => $pickup[5]);
 				}
 				else if (!empty($dropoff)) {
 					// set reservation type in session
 					$session_info['reservation'] = 'dropoff';
 					$session_info['dropoff'] = array('VIN' => $dropoff[0], 'make' => $dropoff[1], 
-						'model' => $dropoff[2], 'lot' => $dropoff[3], 'pickup' => $dropoff[4]);
+						'model' => $dropoff[2], 'lot' => $dropoff[3], 'pickup' => $dropoff[4], 'resNO' => $dropoff[5]);
 				}
 				// else return empty array
 				return $session_info;
