@@ -3,6 +3,10 @@
 
 <?php 
 	class RentalModel {
+		private $db = NULL;
+		private $pickupCar = NULL;
+		private $dropoffCar = NULL;
+		private $delReservation = NULL;
 		private $pickupSQL = 
 			'INSERT into RentalHistory values
 			(:VIN, :ID, NOW(), NULL, :odometer, NULL, :status, NULL, :length, 1)';
@@ -13,9 +17,6 @@
 		private $deleteSQL = 
 			'DELETE from Reservation
 			WHERE reservationNo = :resNO';
-		private $pickupCar = NULL;
-		private $dropoffCar = NULL;
-		private $delReservation = NULL;
 
 		public function __construct ($pdo) {
 			$this->db = $pdo;

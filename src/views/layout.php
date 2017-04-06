@@ -71,7 +71,7 @@
                                 <i class="fa fa-user fa-fw"></i>'. $user_info['name'] .' <i class="fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                                <li><a href="?controller=pages&action=profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                                 </li>'.
                                 $rental
                                 .'<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>

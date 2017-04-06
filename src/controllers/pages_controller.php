@@ -71,6 +71,28 @@
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< user actions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // ==============================================================================
 
+		public function profile () {
+			$name = $phone = $email = $liscense = $fee = $address = $postal = $city = $country = '';
+			$rental = '';
+			require_once('models/profile_model.php');
+			$model = new ProfileModel(Database::getInstance());
+			$user_info = $_SESSION['user_info'];
+			$profile = $model->getProfile($user_info['ID']);
+			if ($profile != '') {
+				$name = $user_info['name'];
+				$phone = $profile['phone'];
+				$email = $profile['email'];
+				$liscense = $profile['liscenseNO'];
+				$fee = $profile['fee'];
+				$address = $profile['address'];
+				$postal = $profile['postal'];
+				$city = $profile['city'];
+				$country = $profile['country'];
+			}
+			$rental = $model->rentalHistory($user_info['ID']);
+			require_once('views/pages/profile_view.php');
+		}
+
 		public function dropoff () {
 			$odometer_failed = $status_failed = '';
 			$odometer = $status = '';
