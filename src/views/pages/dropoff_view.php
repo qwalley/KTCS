@@ -22,7 +22,7 @@
 		<?php
 			if ($user_info['pickup'] != '') {
 				$car = $user_info['pickup'];
-				echo '<h4>You reserved the'.$car['make'].' '.$car['model'].'</h4>'
+				echo '<h4>You reserved the'.$car['make'].' '.$car['model'].'</h4>';
 			}
 		?>
 		<h3 class="page-header">Helpful Pickup Tips:</h3>;
