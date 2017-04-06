@@ -193,46 +193,31 @@
 		}
 
 		public function reserve () {
+			require_once('controllers/admin_controller.php');
 			$length_failed = $date_failed = $lotNo_failed = "";
 			$result_message = $success = "";
 			$cars = $rh = $reservations = NULL;
 
-			$lotNo = "";
+			$lotNo = $date = $length = "";
 			$validquery = true;
 
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
 				require_once('models/ReservationModel.php');
-				if(empty($_POST["startDate"])){
-					$date_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-					$startDate = $_POST['startDate'];
-				}
-				if(empty($_POST["length"])){
-					$length_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-					$length = $_POST['length'];
-				}
+			  	$lotNo = PagesController::test_input($_POST["lotNo"]);
+				$date = PagesController::test_input($_POST["startDate"]);
+				$length = PagesController::test_input($_POST["length"]);
 			}
 			else{
 				$validquery = false;
 			}
+			
+			$lot = ReservationModel::getLot($lotNo);
 
 			if($validquery){
 				$user_info = $_SESSION['user_info'];
-				$success = ReservationModel::addReservation($_POST['VIN'], $user_info['ID'], $startDate, $length);
+				$success = ReservationModel::addReservation($_POST['VIN'], $user_info['ID'], $date, $length);
+				$cars = ReservationModel::lotcars($lotNo, AdminController::normalize_date($date), $length);
 				$result_message = "reservation made!";
-			}
-			else {
-				$result_message = "fuck";
-			}
-			if($_SERVER["REQUEST_METHOD"] == 'GET') {
-				//$cars = $_SESSION['cars'];
-				//$result_message = "Listed below are the cars in lot ";
-				$result_message = '<pre>'.print_r($_SESSION['cars']).'</pre>';
 			}
 			require_once('views/pages/rental_view.php');
 		}
@@ -240,21 +225,16 @@
 		public function lotcars() {
 			require_once('models/ReservationModel.php');
 			require_once('controllers/admin_controller.php');
-			$lotNo_failed = $date_failed = $length_failed = "";
+			$date_failed = $length_failed = "";
 			$result_message = "";
 			$cars = NULL;
 
-			$lotNo = $date = "";
+			$lotNo = $date = $length = "";
 			$validquery = true;
 
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
-				if(empty($_POST["lotNo"])){
-					$lotNo_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-			  		$lotNo = PagesController::test_input($_POST["lotNo"]);
-				}
+			  	$lotNo = PagesController::test_input($_POST["lotNo"]);
+
 				if(empty($_POST["startDate"])){
 					$date_failed = "Required Field";
 					$validquery = false;
@@ -270,16 +250,19 @@
 			  		$length = PagesController::test_input($_POST["length"]);
 				}
 			}
+			else if($_SERVER["REQUEST_METHOD"] == "GET"){
+				$lotNo = PagesController::test_input($_GET['lotNo']);
+				$date = date("Y-m-d");
+				$length = '1';
+			}
 			else{
 				$validquery = false;
 			}
 
+			$lot = ReservationModel::getLot($lotNo);
+
 			if($validquery){
 				$cars = ReservationModel::lotcars($lotNo, AdminController::normalize_date($date), $length);
-
-				if(count($cars) == 0){
-					$result_message = "There are no cars in that lot over that time period.";
-				}
 			}
 			require_once('views/pages/rental_view.php');
 		}

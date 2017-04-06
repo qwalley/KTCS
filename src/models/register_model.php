@@ -6,14 +6,17 @@
 		private $db = NULL;
 		private $checkExisting = NULL;
 		private $addUser = NULL;
+
 		private $emailSQL = 
 			'SELECT email
 			FROM member
 			WHERE email = :email';
+
 		private $liscenseSQL =
 			'SELECT liscenseNO
 			FROM member
 			WHERE liscenseNO = :liscenseNO';
+			
 		private $addSQL = 
 			"INSERT into member values
 			(NULL, :name, :phone, :email, :password, 0, :liscenseNO, 60, :address, :postal, :city, :country);";

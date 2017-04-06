@@ -10,10 +10,12 @@
 		private $pickupSQL = 
 			'INSERT into RentalHistory values
 			(:VIN, :ID, NOW(), NULL, :odometer, NULL, :status, NULL, :length, 1)';
+
 		private $dropoffSQL = 
 			'UPDATE RentalHistory
 			SET dropoff = NOW(), endingOdometer = :odometer, StatusOnReturn = :status, active = 0
 			WHERE memberID = :ID AND VIN = :VIN AND pickup = :pickup';
+
 		private $deleteSQL = 
 			'DELETE from Reservation
 			WHERE reservationNo = :resNO';

@@ -90,13 +90,16 @@
                             <a href="/KTCS/src"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-car fa-fw"></i> Rent A Car<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-car fa-fw"></i> Car Locations<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="?controller=pages&action=lotcars">Rent By Location</a>
+                                    <a href="?controller=pages&action=lotcars&lotNo=1">301 Concession Street</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo '?' . htmlspecialchars(SID) ?>">Rent By Date</a>
+                                    <a href="?controller=pages&action=lotcars&lotNo=2">195 Willingdon Avenue</a>
+                                </li>
+                                <li>
+                                    <a href="?controller=pages&action=lotcars&lotNo=3">981 Division Street</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

@@ -16,7 +16,7 @@
         const dateReservationsSQL =
             'SELECT *
 				FROM Reservation
-				WHERE startDate >= :startDate AND startDate <= :startDate + reservationLength';
+				WHERE startDate <= :startDate AND startDate + reservationLength >= :startDate';
 
         const addCarSQL =
             'INSERT INTO Car VALUES
@@ -105,7 +105,7 @@
 			$checkquery->execute(array(':lotNo' => $lotNo));
 			$check = $checkquery->fetch();
 
-			if($check['numSpaces'] > $check['numCars']){
+			if(empty($check) | ($check['numSpaces'] > $check['numCars'])){
 				$query->execute(array(':VIN' => $VIN, ':make' => $make, 'model' => $model, 'modelYear' => $modelYear, 'dailyFee' => $dailyFee, 'lotNo' => $lotNo));
 				return "Car successfully added to fleet.";
 			}
