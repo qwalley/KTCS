@@ -49,6 +49,12 @@
 					</div>
 				</div>
 			<?php } ?>	
+		<?php } else {?>
+			<div class="row">
+				<div class="col-md-12">
+					<h5>The are no cars in this lot available for the specified time period.</h5>
+				</div>
+			</div>
 		<?php } ?>
 	</div>
 </div>
