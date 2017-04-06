@@ -71,6 +71,10 @@
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< user actions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // ==============================================================================
 
+		public function settings () {
+			require_once('views/pages/settings_view.php');
+		}
+
 		public function profile () {
 			$name = $phone = $email = $liscense = $fee = $address = $postal = $city = $country = '';
 			$rental = '';

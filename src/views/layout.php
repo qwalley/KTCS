@@ -74,7 +74,7 @@
                                 <li><a href="?controller=pages&action=profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                                 </li>'.
                                 $rental
-                                .'<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                .'<li><a href="?controller=pages&action=settings"><i class="fa fa-gear fa-fw"></i> Settings</a>
                                 </li>
                             </ul>
                         </li>
