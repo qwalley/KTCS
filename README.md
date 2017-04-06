@@ -12,14 +12,6 @@ A website for an imaginary carshare service. Built from Php and MySQL
 * Open a web browser and search "localhost/KTCS/src". You should see a very ugly website welcoming you to the home page.
 
 ## Will's To Do:
-* create session info model
-* create queries to: 
-	* register users
-	* retrieve user data
-* create function to hash passwords
-* design and implement UI
-	* colour scheme
-	* wire frames
-	* html templates and CSS
+* create user profile page
 ## Jack's To Do:
 ## Owen's To Do:
