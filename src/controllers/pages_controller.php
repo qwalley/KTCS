@@ -206,7 +206,7 @@
 		public function lotcars() {
 			require_once('models/ReservationModel.php');
 			require_once('controllers/admin_controller.php');
-			$lotNo_failed = $date_failed = $length_failed = "";
+			$date_failed = $length_failed = "";
 			$result_message = "";
 			$cars = NULL;
 
@@ -214,13 +214,8 @@
 			$validquery = true;
 
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
-				if(empty($_POST["lotNo"])){
-					$lotNo_failed = "Required Field";
-					$validquery = false;
-				}
-				else {
-			  		$lotNo = PagesController::test_input($_POST["lotNo"]);
-				}
+			  	$lotNo = PagesController::test_input($_POST["lotNo"]);
+
 				if(empty($_POST["startDate"])){
 					$date_failed = "Required Field";
 					$validquery = false;
@@ -236,9 +231,15 @@
 			  		$length = PagesController::test_input($_POST["length"]);
 				}
 			}
+			else if($_SERVER["REQUEST_METHOD"] == "GET"){
+				$lotNo = PagesController::test_input($_GET['lotNo']);
+				$validquery = false;
+			}
 			else{
 				$validquery = false;
 			}
+
+			$lot = ReservationModel::getLot($lotNo);
 
 			if($validquery){
 				$cars = ReservationModel::lotcars($lotNo, AdminController::normalize_date($date), $length);

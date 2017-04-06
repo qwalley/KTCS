@@ -60,4 +60,22 @@
             $this->dailyFee = $dailyFee;
         }
     }
+
+    class Lot {
+        public $lotNo;
+        public $address;
+        public $postalCode;
+        public $city;
+        public $country;
+        public $numSpaces;
+
+        public function __construct ($lotNo, $address, $postalCode, $city, $country, $numSpaces){
+            $this->lotNo = $lotNo;
+            $this->address = $address;
+            $this->postalCode = $postalCode;
+            $this->city = $city;
+            $this->country = $country;
+            $this->numSpaces = $numSpaces;
+        }
+    }
 ?>

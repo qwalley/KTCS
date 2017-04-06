@@ -21,6 +21,11 @@
 				ON lotcars.VIN = resConflicts.VIN
 				WHERE IFNULL(resConflicts.VIN, 0) = 0';
 
+		const lotSQL =
+			'SELECT *
+				FROM ParkingLocation
+				WHERE lotNo = :lotNo';
+
         public function addReservation ($VIN, $memberID, $startDate, $reservationLength) {
         	 $db = Database::getInstance();
         	 $query = $db->prepare(ReservationModel::addReservationSQL);
@@ -43,6 +48,20 @@
       		}
 
 			return $cars;
+		}
+
+		public function getLot($lotNo){
+			require_once('admin_data.php');
+			$db = Database::getInstance();
+			$query = $db->prepare(ReservationModel::lotSQL);
+			$lot = NULL;
+
+			$query->execute(array(':lotNo' => $lotNo));
+			$res = $query->fetch();
+
+			$lot = new Lot($res['lotNo'], $res['address'], $res['postalCode'], $res['city'], $res['country'], $res['numSpaces']);
+
+			return $lot;
 		}
 	}
 ?>

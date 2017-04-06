@@ -89,9 +89,7 @@
 						<th>VIN</th>
 					<?php } ?>
 					<th>MemberID</th>
-					<?php if($fromDate == false) { ?>
-						<th>Start Date</th>
-					<?php } ?>
+					<th>Start Date</th>
 					<th>Access Code</th>
 					<th>Reservation Length</th>
 				</tr>
@@ -102,9 +100,7 @@
 							<td><?php echo $reservation->VIN; ?></td>
 						<?php } ?>
 						<td><?php echo $reservation->memberID; ?></td>
-						<?php if($fromDate == false) { ?>
-							<td><?php echo $reservation->startDate; ?></td>
-						<?php } ?>
+						<td><?php echo $reservation->startDate; ?></td>
 						<td><?php echo $reservation->accessCode; ?></td>       
 						<td><?php echo $reservation->reservationLength; ?></td>
 					</tr>

@@ -2,10 +2,9 @@
 <!-- authors: Jack East -->
 
 <div id="lot_cars_view">
-	<p>Find all the cars in a lot:</p>
+	<h2><?php echo "Lot Number: ".$lot->lotNo.", ".$lot->address.", ".$lot->postalCode."" ?></h2>
 	<form method="post" action="?controller=pages&action=lotcars">
-		Lot Number <input type="text" name="lotNo">
-		<span class="error"><?php echo $lotNo_failed ?></span>
+		<input type="hidden" name="lotNo" value=<?php echo $lotNo ?>>
 		<div class="form-group">
 			<label for="l2">From:</label>
 			<span><?php echo $date_failed ?></span>
