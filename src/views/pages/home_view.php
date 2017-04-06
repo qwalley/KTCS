@@ -1,9 +1,16 @@
 <!-- filename: home_views.php -->
 <!-- authors: Will Alley -->
 
+<style>
+	.stupidHeaderFix{
+		margin-bottom:-30px;
+	}
+</style>
+
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Home</h1>
+        <h2 class="stupidHeaderFix">K-Town Car Share</h2>
+		<h3 class="page-header">We put the car in caring about our customers</h3>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -15,9 +22,15 @@
 			if(isset($_SESSION['user_info'])) {
 				$user_info = $_SESSION['user_info'];
 				echo 'Welcome ' . $user_info['name'];
-				echo '<pre>';
-				print_r($user_info);
-				echo "</pre>";
+		?>
+		<br>
+		<?php
+				if($user_info['reservation'] == 'pickup'){
+					echo "You have a car reserved for pickup today.";
+				}
+				else if($user_info['reservation'] == 'dropoff'){
+					echo "Your car reservation ends today. Please remember to return your vehicle.";
+				}
 			}
 		?>
 		</p>
