@@ -10,8 +10,3 @@ A website for an imaginary carshare service. Built from Php and MySQL
 * In your terminal, navigate to XAMPP/htdocs and clone the repository using `$git clone https://github.com/qwalley/KTCS.git` on UNIX systems.
 
 * Open a web browser and search "localhost/KTCS/src". You should see a very ugly website welcoming you to the home page.
-
-## Will's To Do:
-* create user profile page
-## Jack's To Do:
-## Owen's To Do:
