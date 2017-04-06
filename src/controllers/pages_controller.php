@@ -175,17 +175,19 @@
 			$result_message = $success = "";
 			$cars = $rh = $reservations = NULL;
 
-			$lotNo = "";
+			$lotNo = $date = $length = "";
 			$validquery = true;
 
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
 				require_once('models/ReservationModel.php');
+			  	$lotNo = PagesController::test_input($_POST["lotNo"]);
+
 				if(empty($_POST["startDate"])){
 					$date_failed = "Required Field";
 					$validquery = false;
 				}
 				else {
-					$startDate = $_POST['startDate'];
+					$date = $_POST['startDate'];
 				}
 				if(empty($_POST["length"])){
 					$length_failed = "Required Field";
@@ -198,19 +200,13 @@
 			else{
 				$validquery = false;
 			}
+			
+			$lot = ReservationModel::getLot($lotNo);
 
 			if($validquery){
 				$user_info = $_SESSION['user_info'];
-				$success = ReservationModel::addReservation($_POST['VIN'], $user_info['ID'], $startDate, $length);
+				$success = ReservationModel::addReservation($_POST['VIN'], $user_info['ID'], $date, $length);
 				$result_message = "reservation made!";
-			}
-			else {
-				$result_message = "fuck";
-			}
-			if($_SERVER["REQUEST_METHOD"] == 'GET') {
-				//$cars = $_SESSION['cars'];
-				//$result_message = "Listed below are the cars in lot ";
-				$result_message = '<pre>'.print_r($_SESSION['cars']).'</pre>';
 			}
 			require_once('views/pages/rental_view.php');
 		}
@@ -222,7 +218,7 @@
 			$result_message = "";
 			$cars = NULL;
 
-			$lotNo = $date = "";
+			$lotNo = $date = $length = "";
 			$validquery = true;
 
 			if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -245,7 +241,8 @@
 			}
 			else if($_SERVER["REQUEST_METHOD"] == "GET"){
 				$lotNo = PagesController::test_input($_GET['lotNo']);
-				$validquery = false;
+				$date = date("Y-m-d");
+				$length = '1';
 			}
 			else{
 				$validquery = false;
