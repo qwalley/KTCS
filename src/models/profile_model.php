@@ -33,7 +33,7 @@
 		}
 
 		public function rentalHistory ($ID) {
-			$result = '';
+			$result = [];
 			$this->getHistory->execute(array(':ID' => $ID));
 			$history = $this->getHistory->fetchAll();
 			if (!empty($history)) {

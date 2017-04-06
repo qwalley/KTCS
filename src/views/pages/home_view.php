@@ -9,8 +9,8 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h2 class="stupidHeaderFix">K-Town Car Share</h2>
-		<h3 class="page-header">We put the car in caring about our customers</h3>
+        <h1 class="page-header">K-Town Car Share</h1>
+		<h4 class="">We put the car in caring about our customers</h4>
     </div>
     <!-- /.col-lg-12 -->
 </div>
